@@ -11,6 +11,10 @@ RUN useradd -ms /bin/bash ebuser
 RUN adduser ebuser sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+RUN mkdir -pv /mounted
+VOLUME /mounted
+RUN chown ebuser /mounted
+
 USER ebuser
 WORKDIR /home/ebuser
 
@@ -20,3 +24,5 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 8.0.275.open-a
 
 RUN curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash - && sudo apt-get install -y nodejs
 
+EXPOSE 3000
+EXPOSE 9000
