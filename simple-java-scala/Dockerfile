@@ -20,7 +20,7 @@ WORKDIR /home/ebuser
 
 RUN curl -s "https://get.sdkman.io" | bash
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 8.0.275.open-adpt && sdk install scala 2.12.13 && sdk install sbt 1.4.7 && sbt -V
+RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 8.0.275.open-adpt && sdk install scala 2.12.13 && sdk install sbt 1.5.1 && sbt -V
 
 RUN curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash - && sudo apt-get install -y nodejs
 
