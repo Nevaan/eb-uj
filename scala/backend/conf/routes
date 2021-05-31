@@ -1,0 +1,66 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# An example controller showing a sample home page
+GET           /                    controllers.HomeController.index()
+
+GET           /expense             controllers.ExpenseController.get()
++ nocsrf
+POST          /expense             controllers.ExpenseController.create()
+PUT           /expense             controllers.ExpenseController.update()
+DELETE        /expense             controllers.ExpenseController.delete()
+
+GET           /friend              controllers.FriendController.get()
+POST          /friend              controllers.FriendController.create()
+PUT           /friend              controllers.FriendController.update()
+DELETE        /friend              controllers.FriendController.delete()
+
+GET           /message             controllers.MessageController.get()
+POST          /message             controllers.MessageController.create()
+PUT           /message             controllers.MessageController.update()
+DELETE        /message             controllers.MessageController.delete()
+
+GET           /note                controllers.NoteController.get()
+POST          /note                controllers.NoteController.create()
+PUT           /note                controllers.NoteController.update()
+DELETE        /note                controllers.NoteController.delete()
+
+GET           /participant         controllers.ParticipantController.get()
+POST          /participant         controllers.ParticipantController.create()
+PUT           /participant         controllers.ParticipantController.update()
+DELETE        /participant         controllers.ParticipantController.delete()
+
+GET           /place               controllers.PlaceController.get()
+POST          /place               controllers.PlaceController.create()
+PUT           /place               controllers.PlaceController.update()
+DELETE        /place               controllers.PlaceController.delete()
+
+GET           /schedule            controllers.ScheduleController.get()
+POST          /schedule            controllers.ScheduleController.create()
+PUT           /schedule            controllers.ScheduleController.update()
+DELETE        /schedule            controllers.ScheduleController.delete()
+
+GET           /schedule            controllers.ScheduleController.get()
+POST          /schedule            controllers.ScheduleController.create()
+PUT           /schedule            controllers.ScheduleController.update()
+DELETE        /schedule            controllers.ScheduleController.delete()
+
+GET           /shoppingList        controllers.ShoppingListController.get()
+POST          /shoppingList        controllers.ShoppingListController.create()
+PUT           /shoppingList        controllers.ShoppingListController.update()
+DELETE        /shoppingList        controllers.ShoppingListController.delete()
+
+GET           /trip                controllers.TripController.get()
+POST          /trip                controllers.TripController.create()
+PUT           /trip                controllers.TripController.update()
+DELETE        /trip                controllers.TripController.delete()
+
+GET           /user                controllers.UserController.get()
+POST          /user                controllers.UserController.create()
+PUT           /user                controllers.UserController.update()
+DELETE        /user                controllers.UserController.delete()
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
