@@ -1,18 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Link, Route} from 'react-router-dom';
-import Dumb from './components/Dumb';
+import { BrowserRouter, Route} from 'react-router-dom';
+import ProjectList from './components/project/ProjectList';
+import Project from './components/project/Project';
+import Drawer from "./components/Drawer";
+import Team from "./components/team/Team";
+import Header from "./components/Header";
+import Story from "./components/story/Story";
+import Task from "./components/task/Task";
 
 function App() {
-  return (
+    return (
     <div className="App">
-                <BrowserRouter>
-                  <ul>
-                    <li><Link to="/">Dumb</Link></li>
-                  </ul>
-                  <Route path="/" component={Dumb}/>
-                </BrowserRouter>
+        <BrowserRouter>
+            <Drawer/>
+            <Header></Header>
+
+            <Route exact path="/project" component={ProjectList}/>
+            <Route path="/project/:projectId" component={Project}/>
+            <Route path="/story/:storyId" component={Story}/>
+            <Route path="/task/:taskId" component={Task}/>
+            <Route path="/team" component={Team}/>
+        </BrowserRouter>
     </div>
   );
 }
