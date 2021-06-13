@@ -1,6 +1,7 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=eb-uj&metric=ncloc)](https://sonarcloud.io/dashboard?id=eb-uj)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=eb-uj&metric=bugs)](https://sonarcloud.io/dashboard?id=eb-uj)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=eb-uj&metric=code_smells)](https://sonarcloud.io/dashboard?id=eb-uj)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=eb-uj&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=eb-uj)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=eb-uj&metric=sqale_index)](https://sonarcloud.io/dashboard?id=eb-uj)
 
 [Link do dockerhuba](https://hub.docker.com/repository/docker/devnevaan/eb-uj "Dockerhub")
