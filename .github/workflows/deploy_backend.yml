@@ -33,15 +33,7 @@ jobs:
           context: scala/
           push: true
           tags: devnevaan/eb-uj:backend-${{ github.sha }} 
-      -
-        name: Build and push fe
-        id: docker_build_fe
-        uses: docker/build-push-action@v2
-        with:
-          context: react/
-          push: true
-          tags: devnevaan/eb-uj:frontend-${{ github.sha }} 
-  
+          
   azure-deployment:
     runs-on: ubuntu-latest
     needs: build-container
