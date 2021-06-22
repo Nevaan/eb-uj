@@ -28,4 +28,4 @@ ENV SBT_HOME="$SDK_HOME/sbt/current/bin"
 ENV JAVA_HOME="$SDK_HOME/java/current/bin"
 ENV PATH="$PATH:$SDK_HOME:$SCALA_HOME:$SBT_HOME:$JAVA_HOME"
 
-CMD sbt run
+CMD sbt -mem 512 run
