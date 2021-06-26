@@ -28,11 +28,11 @@ const UserList: FC<UserListProps> = () => {
     const [users, setUsers] = useState<UserModel[]>([
         {
             id: 1,
-            name: "team1"
+            name: "user1"
         },
         {
             id: 2,
-            name: "team2"
+            name: "user2"
         }
     ]);
 
