@@ -1,5 +1,8 @@
 FROM ubuntu:18.04
 
+ARG PLAY_APPLICATION_SECRET
+ENV PLAY_APPLICATION_SECRET=PLAY_APPLICATION_SECRET
+
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 SHELL ["/bin/bash", "-c"]
 
@@ -28,4 +31,5 @@ ENV SBT_HOME="$SDK_HOME/sbt/current/bin"
 ENV JAVA_HOME="$SDK_HOME/java/current/bin"
 ENV PATH="$PATH:$SDK_HOME:$SCALA_HOME:$SBT_HOME:$JAVA_HOME"
 
-CMD sbt -mem 512 run
+RUN sbt clean stage
+CMD target/universal/stage/bin/backend -Dplay.evolutions.db.default.autoApply=true

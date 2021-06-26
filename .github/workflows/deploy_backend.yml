@@ -32,7 +32,9 @@ jobs:
         with:
           context: scala/
           push: true
-          tags: devnevaan/eb-uj:backend-${{ github.sha }} 
+          tags: devnevaan/eb-uj:backend-${{ github.sha }}
+          build-args: |
+            PLAY_APPLICATION_SECRET=${{ secrets.PLAY_APPLICATION_SECRET }}
           
   azure-deployment:
     runs-on: ubuntu-latest
