@@ -33,7 +33,7 @@ jobs:
           push: true
           tags: devnevaan/eb-uj:frontend-${{ github.sha }}
           build-args: |
-            REACT_APP_API_URL={{ secrets.REACT_APP_API_URL }}
+            REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
 
   azure-deployment:
     runs-on: ubuntu-latest
