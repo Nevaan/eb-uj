@@ -9,6 +9,7 @@ import ProjectTab from "./ProjectTab";
 import Sprint from "../sprint/Sprint";
 import Backlog from "../backlog/Backlog";
 import Team from "../team/Team";
+import TeamDetails from "../team/TeamDetails";
 
 interface ProjectRouteParams {
     projectId: string;
@@ -54,7 +55,7 @@ const Project: FC<ProjectProps> = (props) => {
                     <Backlog></Backlog>
                 </ProjectTab>
                 <ProjectTab value={tabIdx} index={2}>
-                    <Team></Team>
+                    <TeamDetails teamId={1}></TeamDetails>
                 </ProjectTab>
             </Paper>
         </div>

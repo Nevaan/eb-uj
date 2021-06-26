@@ -8,6 +8,10 @@ import Team from "./components/team/Team";
 import Header from "./components/Header";
 import Story from "./components/story/Story";
 import Task from "./components/task/Task";
+import Subtask from "./components/subtask/Subtask";
+import TeamList from "./components/team/TeamList";
+import UserList from "./components/user/UserList";
+import User from "./components/user/User";
 
 function App() {
     return (
@@ -20,7 +24,11 @@ function App() {
             <Route path="/project/:projectId" component={Project}/>
             <Route path="/story/:storyId" component={Story}/>
             <Route path="/task/:taskId" component={Task}/>
-            <Route path="/team" component={Team}/>
+            <Route path="/subtask/:subtaskId" component={Subtask}/>
+            <Route exact path="/team" component={TeamList}/>
+            <Route path="/team/:teamId" component={Team}/>
+            <Route exact path="/user" component={UserList}/>
+            <Route path="/user/:userId" component={User}/>
         </BrowserRouter>
     </div>
   );

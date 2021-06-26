@@ -1,6 +1,6 @@
 import { apiConfig } from '../ApiConfig';
 import {CreateProject} from "./model/CreateProject";
-import {Project} from "./model/Project";
+import {ProjectModel} from "./model/ProjectModel";
 
 const projectApiUrl = `${ apiConfig.baseUrl }project`;
 
@@ -14,20 +14,20 @@ export const ProjectApi = {
         }).then(res => res.json())
     },
 
-    list: (): Promise<Project[]> => {
+    list: (): Promise<ProjectModel[]> => {
         return fetch(projectApiUrl, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.json())
     },
 
-    get: (id: number): Promise<Project> => {
+    get: (id: number): Promise<ProjectModel> => {
         return fetch(`${ projectApiUrl }/${id}`, {
             method: 'GET'
         }).then(res => res.json())
     },
 
-    update: (updateProject: any): Promise<Project> => {
+    update: (updateProject: any): Promise<ProjectModel> => {
         const { id, ...rest } = updateProject;
 
         return fetch(`${ projectApiUrl }/${id}`, {

@@ -1,12 +1,21 @@
-import { FC } from "react";
+import {FC} from "react";
+import {RouteComponentProps} from "react-router-dom";
+import TeamDetails from "./TeamDetails";
 
-type TeamProps = {}
+interface TeamRouteParams {
+    teamId: string;
+}
 
-const Team: FC<TeamProps> = () => {
+interface TeamProps extends RouteComponentProps<TeamRouteParams> {
+
+}
+
+const Team: FC<TeamProps> = (props) => {
+
+    const teamId = Number(props.match.params.teamId);
+
     return (
-        <div>
-            Team!
-        </div>
+        <TeamDetails teamId={teamId}> </TeamDetails>
     )
 }
 

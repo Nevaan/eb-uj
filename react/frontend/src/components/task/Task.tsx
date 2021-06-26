@@ -1,5 +1,6 @@
 import { FC } from "react";
 import {RouteComponentProps} from "react-router-dom";
+import SubtaskList from "../subtask/SubtaskList";
 
 interface TaskRouteParams {
     taskId: string;
@@ -11,6 +12,7 @@ const Task: FC<TaskProps> = (props) => {
     return (
         <div>
             Task {props.match.params.taskId}!
+            <SubtaskList></SubtaskList>
         </div>
     )
 }

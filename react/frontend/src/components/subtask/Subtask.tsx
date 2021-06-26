@@ -1,11 +1,17 @@
 import { FC } from "react";
+import {RouteComponentProps} from "react-router-dom";
 
-type SubtaskProps = {}
+interface SubtaskRouteParams {
+    subtaskId: string;
+}
 
-const Subtask: FC<SubtaskProps> = () => {
+interface SubtaskProps extends RouteComponentProps<SubtaskRouteParams> {
+}
+
+const Subtask: FC<SubtaskProps> = (props) => {
     return (
         <div>
-            Subtask!
+            Subtask {props.match.params.subtaskId}!
         </div>
     )
 }
