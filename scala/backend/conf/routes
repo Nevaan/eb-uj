@@ -5,6 +5,8 @@
 
 # An example controller showing a sample home page
 
+GET           /authenticate        controllers.AuthController.auth()
+
 GET           /expense             controllers.ExpenseController.get()
 POST          /expense             controllers.ExpenseController.create()
 PUT           /expense             controllers.ExpenseController.update()
