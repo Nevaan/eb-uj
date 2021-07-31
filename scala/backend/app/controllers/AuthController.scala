@@ -3,6 +3,7 @@ package controllers
 import com.mohiva.play.silhouette.api.LoginEvent
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers.{CommonSocialProfileBuilder, SocialProvider, SocialProviderRegistry}
+import play.api.Logger
 import play.api.mvc.{AnyContent, Request}
 
 import javax.inject.{Inject, Singleton}
@@ -13,9 +14,10 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
                                 configuration: play.api.Configuration,
                                 socialProviderRegistry: SocialProviderRegistry
                                )(implicit ex: ExecutionContext) extends SilhouetteController(scc) {
-
+  override val logger = Logger(this.getClass)
 
   def auth() = Action.async {
+    val redirectUrl = configuration.get[String]("ebuj.succesfullAuthUrl")
     implicit request: Request[AnyContent] =>
     (socialProviderRegistry.get[SocialProvider]("github") match {
       case Some(p: SocialProvider with CommonSocialProfileBuilder) =>
@@ -27,9 +29,10 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
             authInfo <- authInfoRepository.save(profile.loginInfo, authInfo)
             authenticator <- authenticatorService.create(profile.loginInfo)
             value <- authenticatorService.init(authenticator)
-            result <- authenticatorService.embed(value, Redirect(configuration.get[String]("ebuj.succesfullAuthUrl")))
+            result <- authenticatorService.embed(value, Redirect(redirectUrl))
           } yield {
             eventBus.publish(LoginEvent(user, request))
+            logger.info(s"Redirect url: ${redirectUrl}")
             result
           }
         }
