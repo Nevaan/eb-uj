@@ -31,11 +31,6 @@
     <appender-ref ref="STDOUT" />
   </appender>
 
-<!--  <logger name="play" level="DEBUG" />-->
-<!--  <logger name="slick" level="DEBUG" />-->
-<!--  <logger name="com.mohiva" level="DEBUG" />-->
-<!--  <logger name="application" level="DEBUG" />-->
-
   <root level="INFO">
     <appender-ref ref="ASYNCFILE" />
     <appender-ref ref="ASYNCSTDOUT" />

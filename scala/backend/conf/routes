@@ -5,6 +5,8 @@
 
 # An example controller showing a sample home page
 
+GET           /health              controllers.HealthCheck.hc()
+
 GET           /authenticate        controllers.AuthController.auth()
 
 GET           /expense             controllers.ExpenseController.get()
