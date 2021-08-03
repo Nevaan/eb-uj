@@ -51,4 +51,3 @@ GET           /user                controllers.UserController.get()
 PUT           /user                controllers.UserController.create()
 PATCH         /user                controllers.UserController.update()
 DELETE        /user                controllers.UserController.delete()
-

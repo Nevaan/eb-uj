@@ -1,35 +1,38 @@
-import React from 'react';
 import './App.css';
-import { BrowserRouter, Route} from 'react-router-dom';
-import ProjectList from './components/project/ProjectList';
-import Project from './components/project/Project';
+import { BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import Drawer from "./components/Drawer";
-import Team from "./components/team/Team";
 import Header from "./components/Header";
-import Story from "./components/story/Story";
-import Task from "./components/task/Task";
-import Subtask from "./components/subtask/Subtask";
-import TeamList from "./components/team/TeamList";
-import UserList from "./components/user/UserList";
-import User from "./components/user/User";
+import { AuthProvider, useAuthState } from './context/auth/context';
+import { Routes } from './config/routes';
+import React, { Component } from 'react';
+import Login from './components/login/Login';
 
 function App() {
+
+    const { loggedIn } = useAuthState();
+
     return (
     <div className="App">
-        <BrowserRouter>
-            <Drawer/>
-            <Header></Header>
+        <AuthProvider>
+            <BrowserRouter>
+            { loggedIn && <Drawer/> && <Header></Header> }
 
-            <Route exact path="/project" component={ProjectList}/>
-            <Route path="/project/:projectId" component={Project}/>
-            <Route path="/story/:storyId" component={Story}/>
-            <Route path="/task/:taskId" component={Task}/>
-            <Route path="/subtask/:subtaskId" component={Subtask}/>
-            <Route exact path="/team" component={TeamList}/>
-            <Route path="/team/:teamId" component={Team}/>
-            <Route exact path="/user" component={UserList}/>
-            <Route path="/user/:userId" component={User}/>
-        </BrowserRouter>
+            { loggedIn ? 
+            (<Switch>
+                { 
+                Routes.map(route => (
+                    <Route exact={route.exact} path={route.path} component={route.component} ></Route>
+                ))
+                }
+                 <Redirect to='/'/>
+            </Switch>) :
+            (<Switch>
+                <Route path="/login" component={Login}></Route>
+                <Redirect to='/login' />
+            </Switch>) }
+
+            </BrowserRouter>
+        </AuthProvider>
     </div>
   );
 }
