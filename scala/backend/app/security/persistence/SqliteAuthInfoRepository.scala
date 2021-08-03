@@ -118,7 +118,7 @@ class SqliteAuthInfoRepository(dbConfigProvider: DatabaseConfigProvider, config:
   override def save(loginInfo: LoginInfo, authInfo: OAuth2Info): Future[OAuth2Info] = db.run {
     return find(loginInfo).flatMap(futureLoginInfo => {
       futureLoginInfo match {
-        case Some(x) => Future.successful(x)
+        case Some(x) => update(loginInfo, authInfo)
         case None => add(loginInfo, authInfo)
       }
     })
