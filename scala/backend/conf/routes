@@ -1,71 +1,54 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# https://www.playframework.com/documentation/latest/ScalaRouting
-# ~~~~
-
-# An example controller showing a sample home page
-
 GET           /health              controllers.HealthCheck.hc()
 
 GET           /authenticate        controllers.AuthController.auth()
 
-GET           /expense             controllers.ExpenseController.get()
-POST          /expense             controllers.ExpenseController.create()
-PUT           /expense             controllers.ExpenseController.update()
-DELETE        /expense             controllers.ExpenseController.delete()
+GET           /backlog             controllers.BacklogController.get
+PUT           /backlog             controllers.BacklogController.create
+PATCH         /backlog             controllers.BacklogController.update
+DELETE        /backlog             controllers.BacklogController.delete
 
-GET           /friend              controllers.FriendController.get()
-POST          /friend              controllers.FriendController.create()
-PUT           /friend              controllers.FriendController.update()
-DELETE        /friend              controllers.FriendController.delete()
+GET           /comment             controllers.CommentController.get
+PUT           /comment             controllers.CommentController.create
+PATCH         /comment             controllers.CommentController.update
+DELETE        /comment             controllers.CommentController.delete
 
-GET           /message             controllers.MessageController.get()
-POST          /message             controllers.MessageController.create()
-PUT           /message             controllers.MessageController.update()
-DELETE        /message             controllers.MessageController.delete()
+GET           /project             controllers.ProjectController.get
+PUT           /project             controllers.ProjectController.create
+PATCH         /project             controllers.ProjectController.update
+DELETE        /project             controllers.ProjectController.delete
 
-GET           /note                controllers.NoteController.get()
-POST          /note                controllers.NoteController.create()
-PUT           /note                controllers.NoteController.update()
-DELETE        /note                controllers.NoteController.delete()
+GET           /sprint              controllers.SprintController.get
+PUT           /sprint              controllers.SprintController.create
+PATCH         /sprint              controllers.SprintController.update
+DELETE        /sprint              controllers.SprintController.delete
 
-GET           /participant         controllers.ParticipantController.get()
-POST          /participant         controllers.ParticipantController.create()
-PUT           /participant         controllers.ParticipantController.update()
-DELETE        /participant         controllers.ParticipantController.delete()
+GET           /story               controllers.StoryController.get
+PUT           /story               controllers.StoryController.create
+PATCH         /story               controllers.StoryController.update
+DELETE        /story               controllers.StoryController.delete
 
-GET           /place               controllers.PlaceController.get()
-POST          /place               controllers.PlaceController.create()
-PUT           /place               controllers.PlaceController.update()
-DELETE        /place               controllers.PlaceController.delete()
+GET           /subtask             controllers.SubtaskController.get
+PUT           /subtask             controllers.SubtaskController.create
+PATCH         /subtask             controllers.SubtaskController.update
+DELETE        /subtask             controllers.SubtaskController.delete
 
-GET           /schedule            controllers.ScheduleController.get()
-POST          /schedule            controllers.ScheduleController.create()
-PUT           /schedule            controllers.ScheduleController.update()
-DELETE        /schedule            controllers.ScheduleController.delete()
+GET           /task                controllers.TaskController.get
+PUT           /task                controllers.TaskController.create
+PATCH         /task                controllers.TaskController.update
+DELETE        /task                controllers.TaskController.delete
 
-GET           /schedule            controllers.ScheduleController.get()
-POST          /schedule            controllers.ScheduleController.create()
-PUT           /schedule            controllers.ScheduleController.update()
-DELETE        /schedule            controllers.ScheduleController.delete()
+GET           /team                controllers.TeamController.get
+PUT           /team                controllers.TeamController.create
+PATCH         /team                controllers.TeamController.update
+DELETE        /team                controllers.TeamController.delete
 
-GET           /shoppingList        controllers.ShoppingListController.get()
-POST          /shoppingList        controllers.ShoppingListController.create()
-PUT           /shoppingList        controllers.ShoppingListController.update()
-DELETE        /shoppingList        controllers.ShoppingListController.delete()
-
-GET           /trip                controllers.TripController.get()
-POST          /trip                controllers.TripController.create()
-PUT           /trip                controllers.TripController.update()
-DELETE        /trip                controllers.TripController.delete()
+GET           /timeentry           controllers.TimeEntryController.get
+PUT           /timeentry           controllers.TimeEntryController.create
+PATCH         /timeentry           controllers.TimeEntryController.update
+DELETE        /timeentry           controllers.TimeEntryController.delete
 
 GET           /user                controllers.UserController.get()
-POST          /user                controllers.UserController.create()
-PUT           /user                controllers.UserController.update()
+PUT           /user                controllers.UserController.create()
+PATCH         /user                controllers.UserController.update()
 DELETE        /user                controllers.UserController.delete()
 
-
-GET           /project             controllers.ProjectsController.get()
-
-# Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
