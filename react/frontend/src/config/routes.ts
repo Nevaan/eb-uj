@@ -1,5 +1,6 @@
 import { FC } from "react"
 import Login from "../components/login/Login"
+import LoginCallback from "../components/login/LoginCallback"
 import Project from "../components/project/Project"
 import ProjectList from "../components/project/ProjectList"
 import Story from "../components/story/Story"
@@ -15,7 +16,20 @@ type Route = {
     path: string;
     component: FC<any>
 }
-export const Routes: Route[] = [
+export const PublicRoutes: Route[] = [
+    {
+        exact: true,
+        path: '/login',
+        component: Login
+    },
+    {
+        exact: true,
+        path: '/login/callback',
+        component: LoginCallback
+    }
+]
+
+export const SecuredRoutes: Route[] = [
     {
         exact: true,
         path: '/project',
