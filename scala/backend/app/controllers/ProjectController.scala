@@ -18,7 +18,7 @@ class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepo
     }
   }
 
-  def create = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
+  def create = silhouette.SecuredAction { implicit request =>
     Ok("create project")
   }
 
