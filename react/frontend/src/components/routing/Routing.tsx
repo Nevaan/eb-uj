@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { PublicRoutes, SecuredRoutes } from "../../config/routes";
 import { useAuthState } from "../../context/auth/context";
@@ -19,7 +19,7 @@ const Routing: FC<RoutingProps> = () => {
                     (
 
                         SecuredRoutes.map(route => (
-                            <Route exact={route.exact} path={route.path} component={route.component} ></Route>
+                            <Route key={route.path} exact={route.exact} path={route.path} component={route.component} ></Route>
                         )).concat(
                             <Redirect to='/' />
                         )
@@ -28,7 +28,7 @@ const Routing: FC<RoutingProps> = () => {
                     (
 
                         PublicRoutes.map(route => (
-                            <Route exact={route.exact} path={route.path} component={route.component} ></Route>
+                            <Route key={route.path} exact={route.exact} path={route.path} component={route.component} ></Route>
                         ))
                             .concat(
                                 <Redirect exact to='/login' />
