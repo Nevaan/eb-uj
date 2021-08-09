@@ -1,12 +1,12 @@
 import { FC } from "react";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { Button } from "@material-ui/core";
-import { AuthApi } from "../../api/auth/AuthApi";
+import { apiConfig } from "../../api/ApiConfig";
 
 type LoginProps = {}
 
 const authenticate = () => {
-    AuthApi.authenticate()
+    window.location.href = apiConfig.authEntrypoint;
 }
 
 const Login: FC<LoginProps> = () => {

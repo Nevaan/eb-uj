@@ -4,7 +4,7 @@ import com.mohiva.play.silhouette.api.LoginEvent
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers.{CommonSocialProfileBuilder, SocialProvider, SocialProviderRegistry}
 import play.api.Logger
-import play.api.mvc.{AnyContent, Request}
+import play.api.mvc.{Action, AnyContent, Request}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,6 +15,10 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
                                 socialProviderRegistry: SocialProviderRegistry
                                )(implicit ex: ExecutionContext) extends SilhouetteController(scc) {
   override val logger = Logger(this.getClass)
+
+  def loginPage() = Action {
+    Redirect(routes.AuthController.auth())
+  }
 
   def auth() = Action.async {
     val redirectUrl = configuration.get[String]("ebuj.succesfullAuthUrl")
@@ -41,7 +45,8 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
       case e: ProviderException =>
         Forbidden("Forbidden")
     }
-
   }
+
+
 
 }

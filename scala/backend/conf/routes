@@ -1,6 +1,7 @@
 GET           /health              controllers.HealthCheck.hc()
 
 GET           /authenticate        controllers.AuthController.auth()
+GET           /auth               controllers.AuthController.loginPage()
 
 GET           /backlog             controllers.BacklogController.get
 PUT           /backlog             controllers.BacklogController.create
