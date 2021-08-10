@@ -17,7 +17,7 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
   override val logger = Logger(this.getClass)
 
   def loginPage() = Action {
-    Redirect("https://20.76.227.85/api/authenticate")
+    Redirect(configuration.get[String]("ebuj.authRedirect"))
   }
 
   def auth() = Action.async {
