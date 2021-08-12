@@ -9,15 +9,21 @@ export const ProjectApi = {
     create: (project: CreateProject): Promise<void> => {
         return fetch(projectApiUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(project)
+            body: JSON.stringify(project), 
+            headers: { 
+                'Content-Type': 'application/json', 
+                credentials: "include"
+            }
         }).then(res => res.json())
     },
 
     list: (): Promise<ProjectModel[]> => {
         return fetch(projectApiUrl, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json', 
+                credentials: "include"
+            }
         }).then(res => res.json())
     },
 

@@ -20,6 +20,11 @@ const styles = {
         color: 'black',
         textDecoration: 'none',
         width: '20vw'
+    } as CSSProperties,
+    drawer: {
+        position: 'absolute',
+        top: '10px',
+        left: '10px'
     } as CSSProperties
 };
 
@@ -30,7 +35,7 @@ const Drawer: FC<DrawerProps> = () => {
     const toggleDrawer = () => setDrawerOpened(!isDrawerOpened)
 
     return (
-        <div>
+        <div style={styles.drawer}>
             <div style={styles.sideNav}>
                 <IconButton onClick={toggleDrawer}>
                     {!isDrawerOpened ? <ReorderIcon /> : null }

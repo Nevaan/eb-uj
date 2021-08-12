@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { PublicRoutes, SecuredRoutes } from "../../config/routes";
 import { useAuthState } from "../../context/auth/context";
 import Drawer from "../Drawer";
-import Header from "../Header";
+
 
 type RoutingProps = {}
 
@@ -13,11 +13,10 @@ const Routing: FC<RoutingProps> = () => {
 
     return (
         <div>
-            {loggedIn && <Drawer /> && <Header></Header>}
+            {loggedIn && <Drawer/>}
             <Switch>
                 {loggedIn ?
                     (
-
                         SecuredRoutes.map(route => (
                             <Route key={route.path} exact={route.exact} path={route.path} component={route.component} ></Route>
                         )).concat(
