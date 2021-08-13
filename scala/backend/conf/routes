@@ -1,55 +1,55 @@
 GET           /health              controllers.HealthCheck.hc()
 
 GET           /authenticate        controllers.AuthController.auth()
-GET           /auth               controllers.AuthController.loginPage()
+GET           /auth                controllers.AuthController.loginPage()
 
 GET           /backlog             controllers.BacklogController.get
-PUT           /backlog             controllers.BacklogController.create
+POST          /backlog             controllers.BacklogController.create
 PATCH         /backlog             controllers.BacklogController.update
 DELETE        /backlog             controllers.BacklogController.delete
 
 GET           /comment             controllers.CommentController.get
-PUT           /comment             controllers.CommentController.create
+POST          /comment             controllers.CommentController.create
 PATCH         /comment             controllers.CommentController.update
 DELETE        /comment             controllers.CommentController.delete
 
 GET           /project             controllers.ProjectController.get
-PUT           /project             controllers.ProjectController.create
+POST          /project             controllers.ProjectController.create
 PATCH         /project             controllers.ProjectController.update
 DELETE        /project             controllers.ProjectController.delete
 
 GET           /sprint              controllers.SprintController.get
-PUT           /sprint              controllers.SprintController.create
+POST          /sprint              controllers.SprintController.create
 PATCH         /sprint              controllers.SprintController.update
 DELETE        /sprint              controllers.SprintController.delete
 
 GET           /story               controllers.StoryController.get
-PUT           /story               controllers.StoryController.create
+POST          /story               controllers.StoryController.create
 PATCH         /story               controllers.StoryController.update
 DELETE        /story               controllers.StoryController.delete
 
 GET           /subtask             controllers.SubtaskController.get
-PUT           /subtask             controllers.SubtaskController.create
+POST          /subtask             controllers.SubtaskController.create
 PATCH         /subtask             controllers.SubtaskController.update
 DELETE        /subtask             controllers.SubtaskController.delete
 
 GET           /task                controllers.TaskController.get
-PUT           /task                controllers.TaskController.create
+POST          /task                controllers.TaskController.create
 PATCH         /task                controllers.TaskController.update
 DELETE        /task                controllers.TaskController.delete
 
 GET           /team                controllers.TeamController.get
-PUT           /team                controllers.TeamController.create
+POST          /team                controllers.TeamController.create
 PATCH         /team                controllers.TeamController.update
 DELETE        /team                controllers.TeamController.delete
 
 GET           /timeentry           controllers.TimeEntryController.get
-PUT           /timeentry           controllers.TimeEntryController.create
+POST          /timeentry           controllers.TimeEntryController.create
 PATCH         /timeentry           controllers.TimeEntryController.update
 DELETE        /timeentry           controllers.TimeEntryController.delete
 
 GET           /user                controllers.UserController.get()
-PUT           /user                controllers.UserController.create()
+POST          /user                controllers.UserController.create()
 PATCH         /user                controllers.UserController.update()
 DELETE        /user                controllers.UserController.delete()
 
