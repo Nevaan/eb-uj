@@ -31,6 +31,8 @@
     <appender-ref ref="STDOUT" />
   </appender>
 
+  <logger name="play.filters.cors" level="TRACE" />
+
   <root level="INFO">
     <appender-ref ref="ASYNCFILE" />
     <appender-ref ref="ASYNCSTDOUT" />
