@@ -32,4 +32,4 @@ ENV JAVA_HOME="$SDK_HOME/java/current/bin"
 ENV PATH="$PATH:$SDK_HOME:$SCALA_HOME:$SBT_HOME:$JAVA_HOME"
 
 RUN sbt clean stage
-CMD target/universal/stage/bin/backend -jvm-debug 5005 -Dplay.evolutions.db.default.autoApply=true
+CMD target/universal/stage/bin/backend -Dplay.evolutions.db.default.autoApply=true
