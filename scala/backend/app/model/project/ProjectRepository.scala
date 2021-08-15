@@ -45,4 +45,15 @@ class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(imp
         .headOption
   }
 
+  def update(id: Long, name: String, description: String): Future[Project] = db.run {
+    val toUpdate = for { p <- project if p.id === id } yield (p.name, p.description)
+    val q = toUpdate.update((name, description))
+    q.map(_ => Project(id, name ,description))
+  }
+
+  def delete(id: Long): Future[Int] = db.run {
+    val toRemove = project.filter(_.id === id)
+    toRemove.delete
+  }
+
 }

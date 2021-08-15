@@ -1,7 +1,7 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.dto.AddProject
+import model.dto.{AddProject, UpdateProject}
 import model.project.ProjectRepository
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
@@ -15,6 +15,7 @@ import scala.concurrent.Future
 class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepository: ProjectRepository, val controllerComponents: ControllerComponents) extends BaseController {
 
   implicit val addProjectFormat = Json.format[AddProject]
+  implicit val updateProjectFormat = Json.format[UpdateProject]
 
   def create = silhouette.SecuredAction.async { implicit request =>
 
@@ -54,11 +55,40 @@ class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepo
     }
   }
 
-  def update = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("update project")
+  def update(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    val content = request.body
+    val jsonObject = content.asJson
+    val updateProjectDto: Option[UpdateProject] =
+      jsonObject.flatMap(
+        Json.fromJson[UpdateProject](_).asOpt
+      )
+
+    updateProjectDto match {
+      case Some(x) => {
+        projectRepository.update(id, x.name, x.description).map(res => {
+          Ok(Json.toJson(res))
+        })
+      }
+      case None => {
+        Future {
+          BadRequest
+        }
+      }
+    }
   }
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete project")
+
+  def delete(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    projectRepository.delete(id).map(result =>
+      result match {
+        case 0 =>
+          NotFound
+        case 1 =>
+          Ok("delete project")
+        case _ =>
+          InternalServerError
+      }
+    )
+
   }
 
 }

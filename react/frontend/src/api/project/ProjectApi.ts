@@ -33,7 +33,7 @@ export const ProjectApi = {
         }).then(res => res.json())
     },
 
-    update: (updateProject: any): Promise<ProjectModel> => {
+    update: (updateProject: ProjectModel): Promise<ProjectModel> => {
         const { id, ...rest } = updateProject;
 
         return fetch(`${ projectApiUrl }/${id}`, {
@@ -46,7 +46,7 @@ export const ProjectApi = {
     remove: (id: number): Promise<void> => {
         return fetch(`${ projectApiUrl }/${id}`, {
             method: 'DELETE'
-        }).then(res => res.json())
+        }).then(res => {})
     }
 
 }

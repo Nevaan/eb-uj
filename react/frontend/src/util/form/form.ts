@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useForm = (callback: any, initialState = {}) => {
+export const useForm = <T>(callback: any, initialState: T) => {
     const [formValues, setFormValues] = useState(initialState);
     
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,5 +17,6 @@ export const useForm = (callback: any, initialState = {}) => {
         onChange,
         onSubmit,
         formValues,
+        setFormValues
     };
 }

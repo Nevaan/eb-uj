@@ -5,33 +5,33 @@ GET           /auth                controllers.AuthController.loginPage()
 
 GET           /backlog             controllers.BacklogController.get
 POST          /backlog             controllers.BacklogController.create
-PATCH         /backlog             controllers.BacklogController.update
+PUT           /backlog             controllers.BacklogController.update
 DELETE        /backlog             controllers.BacklogController.delete
 
 GET           /comment             controllers.CommentController.get
 POST          /comment             controllers.CommentController.create
-PATCH         /comment             controllers.CommentController.update
+PUT           /comment             controllers.CommentController.update
 DELETE        /comment             controllers.CommentController.delete
 
 GET           /project             controllers.ProjectController.get
 GET           /project/:id         controllers.ProjectController.getById(id: Long)
 POST          /project             controllers.ProjectController.create
-PATCH         /project             controllers.ProjectController.update
-DELETE        /project             controllers.ProjectController.delete
+PUT           /project/:id         controllers.ProjectController.update(id: Long)
+DELETE        /project/:id         controllers.ProjectController.delete(id: Long)
 
 GET           /sprint              controllers.SprintController.get
 POST          /sprint              controllers.SprintController.create
-PATCH         /sprint              controllers.SprintController.update
+PUT           /sprint              controllers.SprintController.update
 DELETE        /sprint              controllers.SprintController.delete
 
 GET           /story               controllers.StoryController.get
 POST          /story               controllers.StoryController.create
-PATCH         /story               controllers.StoryController.update
+PUT           /story               controllers.StoryController.update
 DELETE        /story               controllers.StoryController.delete
 
 GET           /subtask             controllers.SubtaskController.get
 POST          /subtask             controllers.SubtaskController.create
-PATCH         /subtask             controllers.SubtaskController.update
+PUT           /subtask             controllers.SubtaskController.update
 DELETE        /subtask             controllers.SubtaskController.delete
 
 GET           /task                controllers.TaskController.get
@@ -41,17 +41,17 @@ DELETE        /task                controllers.TaskController.delete
 
 GET           /team                controllers.TeamController.get
 POST          /team                controllers.TeamController.create
-PATCH         /team                controllers.TeamController.update
+PUT           /team                controllers.TeamController.update
 DELETE        /team                controllers.TeamController.delete
 
 GET           /timeentry           controllers.TimeEntryController.get
 POST          /timeentry           controllers.TimeEntryController.create
-PATCH         /timeentry           controllers.TimeEntryController.update
+PUT           /timeentry           controllers.TimeEntryController.update
 DELETE        /timeentry           controllers.TimeEntryController.delete
 
 GET           /user                controllers.UserController.get()
 POST          /user                controllers.UserController.create()
-PATCH         /user                controllers.UserController.update()
+PUT           /user                controllers.UserController.update()
 DELETE        /user                controllers.UserController.delete()
 
 GET           /profile             controllers.UserController.profile()

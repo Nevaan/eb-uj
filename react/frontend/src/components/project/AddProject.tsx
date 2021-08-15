@@ -69,15 +69,14 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
         description: "",
     };
 
-    const { onChange, onSubmit, formValues } = useForm(
+    const { onChange, onSubmit, formValues } = useForm<CreateProject>(
         createProjectCallback,
         initialState
     );
 
     async function createProjectCallback() {
-        const createProject = formValues as CreateProject;
         ProjectApi
-            .create(createProject)
+            .create(formValues)
             .then(() => {
                 setAddingProject(false);
                 props.success();
@@ -118,7 +117,7 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
                                     onClick={() => setAddingProject(false)}
                                 >
                                     Cancel
-                        </Button>
+                                </Button>
                                 <Button type="submit" variant="contained" color="primary" className={classes.button}>
                                     Create
                         </Button>
