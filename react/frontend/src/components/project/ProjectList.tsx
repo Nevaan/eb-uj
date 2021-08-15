@@ -25,7 +25,7 @@ const styles = {
         margin: 'auto'
     } as CSSProperties,
     table: {
-        alignSelf: "center"
+        
     } as CSSProperties
 };
 
@@ -79,8 +79,6 @@ const ProjectList: FC<ProjectListProps> = () => {
 
     const [projects, setProjects] = useState<ProjectModel[]>([]);
 
-    const classes = useStyles();
-
     useEffect(() => {
         fetchProjects()
     }, []);
@@ -104,7 +102,7 @@ const ProjectList: FC<ProjectListProps> = () => {
                                             const value = project[column.id];
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
-                                                    { value}
+                                                    { value }
                                                 </TableCell>
                                             );
                                         })}
@@ -119,7 +117,7 @@ const ProjectList: FC<ProjectListProps> = () => {
                         )
                 }
             </div>
-            <AddProject></AddProject>
+            <AddProject success={fetchProjects} ></AddProject>
             
         </div>
 

@@ -1,4 +1,4 @@
-import {ChangeEvent, FC, useState} from "react";
+import {ChangeEvent, FC, useEffect, useState} from "react";
 import { RouteComponentProps } from "react-router-dom";
 
 import Paper from '@material-ui/core/Paper';
@@ -8,8 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import ProjectTab from "./ProjectTab";
 import Sprint from "../sprint/Sprint";
 import Backlog from "../backlog/Backlog";
-import Team from "../team/Team";
 import TeamDetails from "../team/TeamDetails";
+import { ProjectApi } from "../../api/project/ProjectApi";
+import { ProjectModel } from "../../api/project/model/ProjectModel";
 
 interface ProjectRouteParams {
     projectId: string;
@@ -28,6 +29,17 @@ const useStyles = makeStyles({
 const Project: FC<ProjectProps> = (props) => {
     const classes = useStyles();
     const [tabIdx, setTabIdx] = useState(0);
+    const [project, setProject] = useState<ProjectModel>();
+
+    useEffect(() => {
+        fetchProjectById()
+    }, []);
+
+    const fetchProjectById = (): void => {
+        ProjectApi.get(+props.match.params.projectId)
+            .then(project => setProject((project)))
+            .catch((err: Error) => console.log(err))
+    }
 
     const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => {
         setTabIdx(newValue);
@@ -35,7 +47,7 @@ const Project: FC<ProjectProps> = (props) => {
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <p>Project {props.match.params.projectId}!</p>
+            <p>Project {project?.id}!</p>
             <Paper className={classes.root}>
                 <Tabs
                     value={tabIdx}

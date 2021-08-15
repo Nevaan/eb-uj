@@ -14,6 +14,7 @@ PATCH         /comment             controllers.CommentController.update
 DELETE        /comment             controllers.CommentController.delete
 
 GET           /project             controllers.ProjectController.get
+GET           /project/:id         controllers.ProjectController.getById(id: Long)
 POST          /project             controllers.ProjectController.create
 PATCH         /project             controllers.ProjectController.update
 DELETE        /project             controllers.ProjectController.delete

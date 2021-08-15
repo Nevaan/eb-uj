@@ -1,5 +1,7 @@
 package model.project
 
+import model.dto.AddProject
+
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
@@ -25,8 +27,22 @@ class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(imp
 
   private val project = TableQuery[ProjectTable]
 
+  def create(name: String, description: String): Future[Project] = db.run {
+    (project.map(t => (t.name, t.description))
+      returning project.map(_.id)
+      into { case ((name, description), id) => Project(id, name, description)}
+      ) += (name, description)
+  }
+
   def list(): Future[Seq[Project]] = db.run {
     project.result
+  }
+
+  def getById(id: Long): Future[Option[Project]] = db.run {
+      project.filter(_.id === id)
+        .take(1)
+        .result
+        .headOption
   }
 
 }

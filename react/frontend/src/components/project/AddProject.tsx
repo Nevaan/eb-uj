@@ -12,6 +12,7 @@ import { CreateProject } from "../../api/project/model/CreateProject";
 import { ProjectApi } from "../../api/project/ProjectApi";
 
 type AddProjectProps = {
+    success: () => void;
 }
 
 const styles = {
@@ -77,8 +78,10 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
         const createProject = formValues as CreateProject;
         ProjectApi
             .create(createProject)
-            .then(() => setAddingProject(false));
-        // send "values" to database
+            .then(() => {
+                setAddingProject(false);
+                props.success();
+            });
     }
 
     return (

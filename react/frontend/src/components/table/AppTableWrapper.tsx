@@ -17,7 +17,7 @@ const useStyles = makeStyles({
         alignItems: 'center'
     },
     paper: {
-        width: '75%'
+        width: '100%'
     },
     container: {
         maxHeight: '80%'
