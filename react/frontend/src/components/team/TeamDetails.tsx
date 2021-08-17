@@ -1,14 +1,14 @@
 import { FC } from "react";
 import EmployeeList from "../employee/EmployeeList";
 
-type TeamDetailsProps = {
-    teamId: number
+interface TeamDetailsProps  {
+    teamId: number;
+    className?: string;
 }
 
-const TeamDetails: FC<TeamDetailsProps> = (props) => {
+const TeamDetails: FC<TeamDetailsProps> = (props: TeamDetailsProps) => {
     return (
-        <div>
-            TeamDetails {props.teamId}!
+        <div className={props.className}>            
             <EmployeeList></EmployeeList>
         </div>
     )
