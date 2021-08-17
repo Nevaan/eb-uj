@@ -1,63 +1,64 @@
-GET           /health              controllers.HealthCheck.hc()
+GET           /health                   controllers.HealthCheck.hc()
 
-GET           /authenticate        controllers.AuthController.auth()
-GET           /auth                controllers.AuthController.loginPage()
+GET           /authenticate             controllers.AuthController.auth()
+GET           /auth                     controllers.AuthController.loginPage()
 
-GET           /backlog             controllers.BacklogController.get
-POST          /backlog             controllers.BacklogController.create
-PUT           /backlog             controllers.BacklogController.update
-DELETE        /backlog             controllers.BacklogController.delete
+GET           /backlog                  controllers.BacklogController.get
+POST          /backlog                  controllers.BacklogController.create
+PUT           /backlog                  controllers.BacklogController.update
+DELETE        /backlog                  controllers.BacklogController.delete
 
-GET           /comment             controllers.CommentController.get
-POST          /comment             controllers.CommentController.create
-PUT           /comment             controllers.CommentController.update
-DELETE        /comment             controllers.CommentController.delete
+GET           /comment                  controllers.CommentController.get
+POST          /comment                  controllers.CommentController.create
+PUT           /comment                  controllers.CommentController.update
+DELETE        /comment                  controllers.CommentController.delete
 
-GET           /employee             controllers.EmployeeController.get
-GET           /employee/:id         controllers.EmployeeController.getById(id: Long)
-POST          /employee             controllers.EmployeeController.create
-PUT           /employee/:id         controllers.EmployeeController.update(id: Long)
+GET           /employee                 controllers.EmployeeController.get
+GET           /employee/:id             controllers.EmployeeController.getById(id: Long)
+POST          /employee                 controllers.EmployeeController.create
+PUT           /employee/:id             controllers.EmployeeController.update(id: Long)
 
-GET           /project             controllers.ProjectController.get
-GET           /project/:id         controllers.ProjectController.getById(id: Long)
-POST          /project             controllers.ProjectController.create
-PUT           /project/:id         controllers.ProjectController.update(id: Long)
-DELETE        /project/:id         controllers.ProjectController.delete(id: Long)
+GET           /project                  controllers.ProjectController.get
+GET           /project/:id              controllers.ProjectController.getById(id: Long)
+POST          /project                  controllers.ProjectController.create
+PUT           /project/:id              controllers.ProjectController.update(id: Long)
+DELETE        /project/:id              controllers.ProjectController.delete(id: Long)
 
-GET           /sprint              controllers.SprintController.get
-POST          /sprint              controllers.SprintController.create
-PUT           /sprint              controllers.SprintController.update
-DELETE        /sprint              controllers.SprintController.delete
+GET           /sprint                   controllers.SprintController.get
+POST          /sprint                   controllers.SprintController.create
+PUT           /sprint                   controllers.SprintController.update
+DELETE        /sprint                   controllers.SprintController.delete
 
-GET           /story               controllers.StoryController.get
-POST          /story               controllers.StoryController.create
-PUT           /story               controllers.StoryController.update
-DELETE        /story               controllers.StoryController.delete
+GET           /story                    controllers.StoryController.get
+POST          /story                    controllers.StoryController.create
+PUT           /story                    controllers.StoryController.update
+DELETE        /story                    controllers.StoryController.delete
 
-GET           /subtask             controllers.SubtaskController.get
-POST          /subtask             controllers.SubtaskController.create
-PUT           /subtask             controllers.SubtaskController.update
-DELETE        /subtask             controllers.SubtaskController.delete
+GET           /subtask                  controllers.SubtaskController.get
+POST          /subtask                  controllers.SubtaskController.create
+PUT           /subtask                  controllers.SubtaskController.update
+DELETE        /subtask                  controllers.SubtaskController.delete
 
-GET           /task                controllers.TaskController.get
-POST          /task                controllers.TaskController.create
-PATCH         /task                controllers.TaskController.update
-DELETE        /task                controllers.TaskController.delete
+GET           /task                     controllers.TaskController.get
+POST          /task                     controllers.TaskController.create
+PATCH         /task                     controllers.TaskController.update
+DELETE        /task                     controllers.TaskController.delete
 
-GET           /team                controllers.TeamController.get
-GET           /team/:id            controllers.TeamController.getById(id: Long)
-POST          /team                controllers.TeamController.create
-PUT           /team/:id            controllers.TeamController.update(id: Long)
-DELETE        /team/:id            controllers.TeamController.delete(id: Long)
+GET           /team                     controllers.TeamController.get
+GET           /team/:id                 controllers.TeamController.getById(id: Long)
+GET           /team/:id/employee        controllers.TeamController.getTeamEmployees(id: Long)
+POST          /team                     controllers.TeamController.create
+PUT           /team/:id                 controllers.TeamController.update(id: Long)
+DELETE        /team/:id                 controllers.TeamController.delete(id: Long)
 
-GET           /timeentry           controllers.TimeEntryController.get
-POST          /timeentry           controllers.TimeEntryController.create
-PUT           /timeentry           controllers.TimeEntryController.update
-DELETE        /timeentry           controllers.TimeEntryController.delete
+GET           /timeentry                controllers.TimeEntryController.get
+POST          /timeentry                controllers.TimeEntryController.create
+PUT           /timeentry                controllers.TimeEntryController.update
+DELETE        /timeentry                controllers.TimeEntryController.delete
 
-GET           /user                controllers.UserController.get()
-POST          /user                controllers.UserController.create()
-PUT           /user                controllers.UserController.update()
-DELETE        /user                controllers.UserController.delete()
+GET           /user                     controllers.UserController.get()
+POST          /user                     controllers.UserController.create()
+PUT           /user                     controllers.UserController.update()
+DELETE        /user                     controllers.UserController.delete()
 
-GET           /profile             controllers.AuthController.profile()
+GET           /profile                  controllers.AuthController.profile()

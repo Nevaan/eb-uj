@@ -1,4 +1,5 @@
 import { apiConfig } from '../ApiConfig';
+import { EmployeeModel } from '../employee/model/EmployeeModel';
 import { CreateTeam } from './model/CreateTeam';
 import { TeamModel } from './model/TeamModel';
 
@@ -28,6 +29,12 @@ export const TeamApi = {
 
     get: (id: number): Promise<TeamModel> => {
         return fetch(`${ teamApiUrl }/${id}`, {
+            method: 'GET'
+        }).then(res => res.json())
+    },
+
+    getEmployees: (id: number): Promise<EmployeeModel[]> => {
+        return fetch(`${ teamApiUrl }/${id}/employee`, {
             method: 'GET'
         }).then(res => res.json())
     },

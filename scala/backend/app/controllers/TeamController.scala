@@ -1,8 +1,9 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.dto.{ AddTeam, UpdateTeam}
+import model.dto.{AddTeam, UpdateTeam}
 import model.team.TeamRepository
+import model.teamtoemployee.TeamToEmployeeRepository
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
 import security.environment.CookieEnv
@@ -13,7 +14,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
 class TeamController @Inject()(silhouette: Silhouette[CookieEnv], val controllerComponents: ControllerComponents,
-                               teamRepository: TeamRepository) extends BaseController {
+                               teamRepository: TeamRepository,
+                               teamToEmployeeRepository: TeamToEmployeeRepository) extends BaseController {
 
   def create = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     val content = request.body
@@ -53,6 +55,12 @@ class TeamController @Inject()(silhouette: Silhouette[CookieEnv], val controller
     }
   }
 
+  def getTeamEmployees(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    teamToEmployeeRepository.getEmployees(id) map { employees =>
+      Ok(Json.toJson(employees))
+    }
+  }
+
   def update(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     val content = request.body
     val jsonObject = content.asJson
@@ -75,6 +83,7 @@ class TeamController @Inject()(silhouette: Silhouette[CookieEnv], val controller
     }
   }
   def delete(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    teamToEmployeeRepository.removeByTeamId(id)
     teamRepository.delete(id).map(result =>
       result match {
         case 0 =>
