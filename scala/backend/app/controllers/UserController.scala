@@ -11,15 +11,7 @@ import security.environment.CookieEnv
 
 @Singleton
 class UserController @Inject()(silhouette: Silhouette[CookieEnv], val controllerComponents: ControllerComponents) extends BaseController {
-  implicit val userWrites: Writes[User] = Writes { user =>
-    Json.obj(
-      "email" -> user.email,
-      "firstName" -> user.firstName,
-      "lastName" -> user.lastName,
-      "fullName" -> user.fullName,
-      "avatarURL" -> user.avatarURL
-    )
-  }
+
 
   def create = Action { implicit request: Request[AnyContent] =>
     Ok("1")
@@ -34,12 +26,7 @@ class UserController @Inject()(silhouette: Silhouette[CookieEnv], val controller
   }
 
   def delete = Action { implicit request: Request[AnyContent] =>
-
     Ok("4")
   }
 
-  def profile = silhouette.SecuredAction { implicit request =>
-    val identity = request.identity
-    Ok(Json.toJson(identity))
-  }
 }

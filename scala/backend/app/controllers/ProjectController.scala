@@ -14,9 +14,6 @@ import scala.concurrent.Future
 @Singleton
 class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepository: ProjectRepository, val controllerComponents: ControllerComponents) extends BaseController {
 
-  implicit val addProjectFormat = Json.format[AddProject]
-  implicit val updateProjectFormat = Json.format[UpdateProject]
-
   def create = silhouette.SecuredAction.async { implicit request =>
 
     val content = request.body

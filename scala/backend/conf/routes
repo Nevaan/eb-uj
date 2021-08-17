@@ -40,9 +40,10 @@ PATCH         /task                controllers.TaskController.update
 DELETE        /task                controllers.TaskController.delete
 
 GET           /team                controllers.TeamController.get
+GET           /team/:id            controllers.TeamController.getById(id: Long)
 POST          /team                controllers.TeamController.create
-PUT           /team                controllers.TeamController.update
-DELETE        /team                controllers.TeamController.delete
+PUT           /team/:id            controllers.TeamController.update(id: Long)
+DELETE        /team/:id            controllers.TeamController.delete(id: Long)
 
 GET           /timeentry           controllers.TimeEntryController.get
 POST          /timeentry           controllers.TimeEntryController.create
@@ -54,4 +55,4 @@ POST          /user                controllers.UserController.create()
 PUT           /user                controllers.UserController.update()
 DELETE        /user                controllers.UserController.delete()
 
-GET           /profile             controllers.UserController.profile()
+GET           /profile             controllers.AuthController.profile()

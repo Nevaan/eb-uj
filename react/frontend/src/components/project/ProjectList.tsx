@@ -4,15 +4,11 @@ import { ProjectApi } from "../../api/project/ProjectApi";
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import AppTableWrapper from "../table/AppTableWrapper";
-import Modal from '@material-ui/core/Modal';
 import AddProject from './AddProject';
-import { Button, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 import { useHistory } from 'react-router-dom';
 import { Column } from "../table/column";
-import React from "react";
-import TextField from '@material-ui/core/TextField';
-import { useForm } from "../../util/form/form";
 
 type ProjectListProps = {}
 

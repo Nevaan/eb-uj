@@ -1,7 +1,5 @@
 package model.project
 
-import model.dto.AddProject
-
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile

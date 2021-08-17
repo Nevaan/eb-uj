@@ -3,7 +3,9 @@ package controllers
 import com.mohiva.play.silhouette.api.LoginEvent
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers.{CommonSocialProfileBuilder, SocialProvider, SocialProviderRegistry}
+import model.user.User
 import play.api.Logger
+import play.api.libs.json.{Json, Writes}
 import play.api.mvc.{Action, AnyContent, Request}
 
 import javax.inject.{Inject, Singleton}
@@ -15,6 +17,16 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
                                 socialProviderRegistry: SocialProviderRegistry
                                )(implicit ex: ExecutionContext) extends SilhouetteController(scc) {
   override val logger = Logger(this.getClass)
+
+  implicit val userWrites: Writes[User] = Writes { user =>
+    Json.obj(
+      "email" -> user.email,
+      "firstName" -> user.firstName,
+      "lastName" -> user.lastName,
+      "fullName" -> user.fullName,
+      "avatarURL" -> user.avatarURL
+    )
+  }
 
   def loginPage() = Action {
     Redirect(configuration.get[String]("ebuj.authRedirect"))
@@ -47,6 +59,9 @@ class AuthController @Inject() (scc: DefaultSilhouetteControllerComponents,
     }
   }
 
-
+  def profile = silhouette.SecuredAction { implicit request =>
+    val identity = request.identity
+    Ok(Json.toJson(identity))
+  }
 
 }
