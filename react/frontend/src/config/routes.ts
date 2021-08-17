@@ -8,8 +8,8 @@ import Subtask from "../components/subtask/Subtask"
 import Task from "../components/task/Task"
 import Team from "../components/team/Team"
 import TeamList from "../components/team/TeamList"
-import User from "../components/user/User"
-import UserList from "../components/user/UserList"
+import Employee from "../components/employee/Employee"
+import EmployeeList from "../components/employee/EmployeeList"
 
 type Route = {
     exact?: boolean;
@@ -62,11 +62,11 @@ export const SecuredRoutes: Route[] = [
     },
     {
         exact: true,
-        path: '/user',
-        component: UserList
+        path: '/employee',
+        component: EmployeeList
     },
     {
-        path: '/user/:userId',
-        component: User
+        path: '/employee/:userId',
+        component: Employee
     },
 ]

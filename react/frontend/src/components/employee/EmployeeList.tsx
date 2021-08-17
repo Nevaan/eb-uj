@@ -2,13 +2,13 @@ import {FC, useState} from "react";
 import {Column} from "../table/column";
 import {useHistory} from "react-router-dom";
 import {TeamModel} from "../../api/team/model/TeamModel";
-import User from "./User";
-import {UserModel} from "../../api/user/model/UserModel";
+import Employee from "./Employee";
+import {EmployeeModel} from "../../api/employee/EmployeeModel";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";
 
-type UserListProps = {}
+type EmployeeListProps = {}
 
 const columns: Column<'id' | 'name'>[] = [
     {id: 'id', label: 'Id', minWidth: 170},
@@ -20,12 +20,12 @@ const columns: Column<'id' | 'name'>[] = [
     }
 ];
 
-const UserList: FC<UserListProps> = () => {
+const EmployeeList: FC<EmployeeListProps> = () => {
 
     const history = useHistory();
 
     //TODO: real data
-    const [users, setUsers] = useState<UserModel[]>([
+    const [employees, setEmployee] = useState<EmployeeModel[]>([
         {
             id: 1,
             name: "user1"
@@ -38,12 +38,12 @@ const UserList: FC<UserListProps> = () => {
 
     return (
         <AppTableWrapper columns={columns}>
-            {users.map((user) => {
+            {employees.map((employee) => {
                 return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={user.id}
-                              onClick={() => history.push("/user/" + user.id)}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={employee.id}
+                              onClick={() => history.push("/employee/" + employee.id)}>
                         {columns.map((column) => {
-                            const value = user[column.id];
+                            const value = employee[column.id];
                             return (
                                 <TableCell key={column.id} align={column.align}>
                                     {value}
@@ -57,4 +57,4 @@ const UserList: FC<UserListProps> = () => {
     )
 }
 
-export default UserList;
+export default EmployeeList;

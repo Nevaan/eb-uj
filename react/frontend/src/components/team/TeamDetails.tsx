@@ -1,5 +1,5 @@
 import { FC } from "react";
-import UserList from "../user/UserList";
+import EmployeeList from "../employee/EmployeeList";
 
 type TeamDetailsProps = {
     teamId: number
@@ -9,7 +9,7 @@ const TeamDetails: FC<TeamDetailsProps> = (props) => {
     return (
         <div>
             TeamDetails {props.teamId}!
-            <UserList></UserList>
+            <EmployeeList></EmployeeList>
         </div>
     )
 }
