@@ -13,6 +13,11 @@ POST          /comment             controllers.CommentController.create
 PUT           /comment             controllers.CommentController.update
 DELETE        /comment             controllers.CommentController.delete
 
+GET           /employee             controllers.EmployeeController.get
+GET           /employee/:id         controllers.EmployeeController.getById(id: Long)
+POST          /employee             controllers.EmployeeController.create
+PUT           /employee/:id         controllers.EmployeeController.update(id: Long)
+
 GET           /project             controllers.ProjectController.get
 GET           /project/:id         controllers.ProjectController.getById(id: Long)
 POST          /project             controllers.ProjectController.create

@@ -7,9 +7,11 @@ interface TeamDetailsProps  {
 }
 
 const TeamDetails: FC<TeamDetailsProps> = (props: TeamDetailsProps) => {
+
+    //TODO: fetch employees for team
     return (
         <div className={props.className}>            
-            <EmployeeList></EmployeeList>
+            <EmployeeList employees={[]}></EmployeeList>
         </div>
     )
 }

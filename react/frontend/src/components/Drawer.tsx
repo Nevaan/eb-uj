@@ -61,6 +61,13 @@ const Drawer: FC<DrawerProps> = () => {
                         </ListItem>
                     </List>
                 </Link>
+                <Link to='/employee' style={styles.link}>
+                    <List>
+                        <ListItem onClick={toggleDrawer} button key='Employees'>
+                            <ListItemText primary='Employees' />
+                        </ListItem>
+                    </List>
+                </Link>
             </MaterialDrawer>
         </div>
     )

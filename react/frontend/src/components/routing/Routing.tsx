@@ -25,7 +25,6 @@ const Routing: FC<RoutingProps> = () => {
 
                     ) :
                     (
-
                         PublicRoutes.map(route => (
                             <Route key={route.path} exact={route.exact} path={route.path} component={route.component} ></Route>
                         ))

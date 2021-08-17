@@ -10,6 +10,7 @@ import Team from "../components/team/Team"
 import TeamList from "../components/team/TeamList"
 import Employee from "../components/employee/Employee"
 import EmployeeList from "../components/employee/EmployeeList"
+import AllEmployee from "../components/employee/AllEmployee"
 
 type Route = {
     exact?: boolean;
@@ -63,10 +64,10 @@ export const SecuredRoutes: Route[] = [
     {
         exact: true,
         path: '/employee',
-        component: EmployeeList
+        component: AllEmployee
     },
     {
-        path: '/employee/:userId',
+        path: '/employee/:employeeId',
         component: Employee
     },
 ]
