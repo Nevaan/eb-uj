@@ -77,7 +77,7 @@ const Project: FC<ProjectProps> = (props) => {
         setTabIdx(newValue);
     };
 
-    const { onChange, onSubmit, formValues, setFormValues } = useForm<Omit<ProjectModel, 'id'>>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<Omit<ProjectModel, 'id' | 'teamId'>>(
         updateProjectCallback,
         {
             name: "",
@@ -99,80 +99,90 @@ const Project: FC<ProjectProps> = (props) => {
     }
 
     const deleteProject = () => {
-        if(project) {
+        if (project) {
             ProjectApi.remove(project.id)
-            .then(() => {
-                history.push("/project")
-            })
+                .then(() => {
+                    history.push("/project")
+                })
         }
     }
 
-    const formChanged = (): boolean  => {
+    const formChanged = (): boolean => {
         return project?.name === formValues.name && project?.description === formValues.description;
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-            <form className={classes.form} autoComplete="off" onSubmit={onSubmit}>
-                <div className={classes.formRow}>
-                    <TextField
-                        className={classes.leftColumn}
-                        name="name"
-                        label="Project name"
-                        value={formValues.name}
-                        onChange={onChange}
-                        variant="outlined"
-                    />
-                    <Button type="submit" variant="contained" color="primary" className={classes.button}
-                    disabled={formChanged()}
-                    >
-                        Save
+        <div>
+            {
+                project ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <form className={classes.form} autoComplete="off" onSubmit={onSubmit}>
+                            <div className={classes.formRow}>
+                                <TextField
+                                    className={classes.leftColumn}
+                                    name="name"
+                                    label="Project name"
+                                    value={formValues.name}
+                                    onChange={onChange}
+                                    variant="outlined"
+                                />
+                                <Button type="submit" variant="contained" color="primary" className={classes.button}
+                                    disabled={formChanged()}
+                                >
+                                    Save
                                 </Button>
-                </div>
+                            </div>
 
-                <div className={classes.formRow}>
-                    <TextField
-                        className={classes.leftColumn}
-                        name="description"
-                        label="Description"
-                        multiline
-                        maxRows={4}
-                        value={formValues.description}
-                        onChange={onChange}
-                        variant="outlined"
-                    />
+                            <div className={classes.formRow}>
+                                <TextField
+                                    className={classes.leftColumn}
+                                    name="description"
+                                    label="Description"
+                                    multiline
+                                    maxRows={4}
+                                    value={formValues.description}
+                                    onChange={onChange}
+                                    variant="outlined"
+                                />
 
-                    <Button  variant="contained" color="secondary" className={classes.button} onClick={deleteProject} >
-                        Delete
+                                <Button variant="contained" color="secondary" className={classes.button} onClick={deleteProject} >
+                                    Delete
                     </Button>
-                </div>
+                            </div>
 
-            </form>
+                        </form>
 
-            <Paper className={classes.root}>
-                <Tabs
-                    value={tabIdx}
-                    onChange={handleTabChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered
-                >
-                    <Tab label="Sprint" />
-                    <Tab label="Backlog" />
-                    <Tab label="Team" />
-                </Tabs>
-                <ProjectTab value={tabIdx} index={0}>
-                    <Sprint></Sprint>
-                </ProjectTab>
-                <ProjectTab value={tabIdx} index={1}>
-                    <Backlog></Backlog>
-                </ProjectTab>
-                <ProjectTab value={tabIdx} index={2}>
-                    <TeamDetails teamId={1}></TeamDetails>
-                </ProjectTab>
-            </Paper>
+                        <Paper className={classes.root}>
+                            <Tabs
+                                value={tabIdx}
+                                onChange={handleTabChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                centered
+                            >
+                                <Tab label="Sprint" />
+                                <Tab label="Backlog" />
+                                <Tab label="Team" />
+                            </Tabs>
+                            <ProjectTab value={tabIdx} index={0}>
+                                <Sprint></Sprint>
+                            </ProjectTab>
+                            <ProjectTab value={tabIdx} index={1}>
+                                <Backlog></Backlog>
+                            </ProjectTab>
+                            <ProjectTab value={tabIdx} index={2}>
+                                <TeamDetails teamId={project.teamId}></TeamDetails>
+                            </ProjectTab>
+                        </Paper>
+                    </div>
+                ) : (
+                    <div>
+                        Loading project
+                    </div>
+                )
+            }
         </div>
+
     )
 }
 

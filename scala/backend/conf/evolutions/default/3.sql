@@ -1,10 +1,4 @@
 # --- !Ups
-CREATE TABLE Team
-(
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    name        text,
-    description text
-);
 
 CREATE TABLE Employee
 (
@@ -22,8 +16,6 @@ CREATE TABLE _TeamEmployee
     UNIQUE (team, employee)
 );
 
-
 # --- !Downs
-DROP TABLE Team;
 DROP TABLE Employee;
 DROP TABLE _TeamEmployee;

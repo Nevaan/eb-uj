@@ -33,7 +33,7 @@ export const ProjectApi = {
         }).then(res => res.json())
     },
 
-    update: (updateProject: ProjectModel): Promise<ProjectModel> => {
+    update: (updateProject: Omit<ProjectModel, "teamId">): Promise<ProjectModel> => {
         const { id, ...rest } = updateProject;
 
         return fetch(`${ projectApiUrl }/${id}`, {

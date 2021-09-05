@@ -25,7 +25,7 @@ class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepo
 
     addProjectDto match {
       case Some(project) => {
-        projectRepository.create(project.name, project.description).map(res =>
+        projectRepository.create(project.name, project.description, project.teamId).map(res =>
           Ok(Json.toJson(res))
         )
       }
@@ -62,8 +62,13 @@ class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepo
 
     updateProjectDto match {
       case Some(x) => {
-        projectRepository.update(id, x.name, x.description).map(res => {
-          Ok(Json.toJson(res))
+        projectRepository.update(id, x.name, x.description)
+          .flatMap(_ => projectRepository.getById(id))
+          .map(res => {
+            res match {
+              case Some(resp) => Ok(Json.toJson(resp))
+              case None => BadRequest
+            }
         })
       }
       case None => {

@@ -1,8 +1,7 @@
-import { CSSProperties, FC, useState } from "react";
+import { CSSProperties, FC, useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
-import React from "react";
 import { useForm } from "../../util/form/form";
 import Modal from '@material-ui/core/Modal';
 
@@ -10,6 +9,11 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { CreateProject } from "../../api/project/model/CreateProject";
 import { ProjectApi } from "../../api/project/ProjectApi";
+
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import { TeamModel } from "../../api/team/model/TeamModel";
+import { TeamApi } from "../../api/team/TeamApi";
 
 type AddProjectProps = {
     success: () => void;
@@ -63,10 +67,16 @@ const useStyles = makeStyles({
 const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
     const classes = useStyles();
     const [addingProject, setAddingProject] = useState<boolean>(false);
+    const [teams, setTeams] = useState<TeamModel[]>([]);
+    
+    useEffect(() => {
+        fetchTeams()
+    }, []);
 
     const initialState = {
         name: "",
         description: "",
+        teamId: -1
     };
 
     const { onChange, onSubmit, formValues } = useForm<CreateProject>(
@@ -81,7 +91,13 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
                 setAddingProject(false);
                 props.success();
             });
-    }
+    };
+
+    const fetchTeams = (): void => {
+        TeamApi.list()
+            .then(teams => setTeams((teams)))
+            .catch((err: Error) => console.log(err))
+    };
 
     return (
         <div className={classes.wrapper}>
@@ -111,6 +127,22 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
                                 onChange={onChange}
                                 name="description"
                             />
+
+                            <Select
+                                id="select-team"
+                                onChange={onChange}
+                                value={formValues.teamId}
+                                name="teamId"
+                                className={classes.formElement}
+                            >
+                                {
+                                    teams.map(team => (
+                                        <MenuItem value={team.id}>
+                                            {team.name}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </Select>
 
                             <div className={classes.buttons}>
                                 <Button variant="contained" color="secondary" className={classes.button}
