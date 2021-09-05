@@ -3,6 +3,7 @@ package controllers
 import com.mohiva.play.silhouette.api.Silhouette
 import model.dto.{AddEmployee, UpdateEmployee}
 import model.employee.EmployeeRepository
+import model.teamtoemployee.TeamToEmployeeRepository
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
 import security.environment.CookieEnv
@@ -12,7 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class EmployeeController @Inject()(silhouette: Silhouette[CookieEnv], employeeRepository: EmployeeRepository, val controllerComponents: ControllerComponents) extends BaseController {
+class EmployeeController @Inject()(silhouette: Silhouette[CookieEnv], employeeRepository: EmployeeRepository, teamToEmployeeRepository: TeamToEmployeeRepository, val controllerComponents: ControllerComponents) extends BaseController {
 
   def create = silhouette.SecuredAction.async { implicit request =>
 
@@ -37,8 +38,14 @@ class EmployeeController @Inject()(silhouette: Silhouette[CookieEnv], employeeRe
     }
   }
 
-  def get = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
-    employeeRepository.list() map { list =>
+  def get(notInTeam: Option[Long]) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+
+    val result = notInTeam match {
+      case Some(teamId) => teamToEmployeeRepository.getEmployeesNotInTeam(teamId)
+      case None => employeeRepository.list()
+    }
+
+    result map { list =>
       Ok(Json.toJson(list))
     }
   }

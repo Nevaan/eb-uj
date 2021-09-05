@@ -49,6 +49,14 @@ export const TeamApi = {
         }).then(res => res.json())
     },
 
+    addEmployeeToTeam: (input: {teamId: number, employeeId: number}): Promise<number> => {
+        const {teamId, employeeId} = input;
+        return fetch(`${ teamApiUrl }/${teamId}/employee/${employeeId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json())
+    },
+
     remove: (id: number): Promise<void> => {
         return fetch(`${ teamApiUrl }/${id}`, {
             method: 'DELETE'

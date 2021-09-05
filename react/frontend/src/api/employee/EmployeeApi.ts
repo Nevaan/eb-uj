@@ -26,6 +26,19 @@ export const EmployeeApi = {
         }).then(res => res.json())
     },
 
+    notAssignedToTeam: (teamId: number): Promise<EmployeeModel[]> => {
+        const queryParams = new URLSearchParams({
+            notInTeam: String(teamId)
+        });
+        return fetch(`${employeeApiUrl}?${queryParams}`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json', 
+                credentials: "include"
+            }
+        }).then(res => res.json())
+    },
+
     get: (id: number): Promise<EmployeeModel> => {
         return fetch(`${ employeeApiUrl }/${id}`, {
             method: 'GET'

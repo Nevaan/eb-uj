@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useForm = <T>(callback: any, initialState: T) => {
     const [formValues, setFormValues] = useState(initialState);
     
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (event: React.ChangeEvent<any>) => {
         setFormValues({ ...formValues, [event.target.name]: 
     event.target.value });
     };

@@ -55,6 +55,12 @@ class TeamController @Inject()(silhouette: Silhouette[CookieEnv], val controller
     }
   }
 
+  def addToTeam(teamId: Long, employeeId: Long)  = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    teamToEmployeeRepository.addEmployeeToTeam(teamId, employeeId) map { result =>
+      Ok(Json.toJson(result))
+    }
+  }
+
   def getTeamEmployees(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     teamToEmployeeRepository.getEmployees(id) map { employees =>
       Ok(Json.toJson(employees))

@@ -10,14 +10,14 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TeamToEmployeeRepository @Inject()(dbConfigProvider: DatabaseConfigProvider,
-                                          teamRepository: TeamRepository,
-                                          employeeRepository: EmployeeRepository)(implicit ec: ExecutionContext){
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
+                                         val teamRepository: TeamRepository,
+                                         val employeeRepository: EmployeeRepository)(implicit ec: ExecutionContext){
+   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
 
-  private class TeamToEmployeeTable(tag: Tag) extends Table[TeamToEmployee](tag, "_TeamEmployee") {
+  class TeamToEmployeeTable(tag: Tag) extends Table[TeamToEmployee](tag, "_TeamEmployee") {
 
     def teamId = column[Long]("team")
     def employeeId = column[Long]("employee")
@@ -28,7 +28,7 @@ class TeamToEmployeeRepository @Inject()(dbConfigProvider: DatabaseConfigProvide
     def * = (teamId, employeeId) <> ((TeamToEmployee.apply _).tupled, TeamToEmployee.unapply)
   }
 
-  private val teamToEmployee = TableQuery[TeamToEmployeeTable]
+  val teamToEmployee = TableQuery[TeamToEmployeeTable]
 
   def getEmployees(id: Long): Future[Seq[Employee]] = db.run {
     teamToEmployee.filter(_.teamId === id)
@@ -41,6 +41,18 @@ class TeamToEmployeeRepository @Inject()(dbConfigProvider: DatabaseConfigProvide
   def removeByTeamId(teamId: Long): Future[Int] = db.run {
     val toRemove = teamToEmployee.filter(_.teamId === teamId)
     toRemove.delete
+  }
+
+  def getEmployeesNotInTeam(teamId: Long): Future[Seq[Employee]] = db.run {
+    val subQuery = teamToEmployee.filter( t2e => t2e.teamId === teamId).map( t2e => t2e.employeeId)
+
+    val query = employeeRepository.employee.filterNot(_.id in subQuery)
+
+    query.distinct.result
+  }
+
+  def addEmployeeToTeam(teamId: Long, employeeId: Long): Future[Int] = db.run {
+    teamToEmployee += TeamToEmployee(teamId, employeeId)
   }
 
 }
