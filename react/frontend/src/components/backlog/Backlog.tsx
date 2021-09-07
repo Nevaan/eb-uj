@@ -6,7 +6,6 @@ type BacklogProps = {}
 const Backlog: FC<BacklogProps> = () => {
     return (
         <div>
-            Backlog!
             <StoryList></StoryList>
         </div>
     )

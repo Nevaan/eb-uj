@@ -3,6 +3,7 @@ package controllers
 import com.mohiva.play.silhouette.api.Silhouette
 import model.dto.{AddProject, UpdateProject}
 import model.project.ProjectRepository
+import model.projectstage.ProjectStageRepository
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
 import security.environment.CookieEnv
@@ -12,7 +13,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepository: ProjectRepository, val controllerComponents: ControllerComponents) extends BaseController {
+class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepository: ProjectRepository,
+                                  projectStageRepository: ProjectStageRepository,
+                                  val controllerComponents: ControllerComponents) extends BaseController {
 
   def create = silhouette.SecuredAction.async { implicit request =>
 
@@ -25,7 +28,15 @@ class ProjectController @Inject()(silhouette: Silhouette[CookieEnv], projectRepo
 
     addProjectDto match {
       case Some(project) => {
-        projectRepository.create(project.name, project.description, project.teamId).map(res =>
+        projectRepository.create(project.name, project.description, project.teamId)
+          .flatMap(project => {
+            projectStageRepository.create("Backlog", project.id)
+          })
+          .flatMap(projectStage => {
+            projectRepository.setBacklog(projectStage.projectId, projectStage.id)
+          })
+          .flatMap(projectId => projectRepository.getById(projectId))
+        .map(res =>
           Ok(Json.toJson(res))
         )
       }

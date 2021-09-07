@@ -5,7 +5,6 @@ type SprintProps = {}
 const Sprint: FC<SprintProps> = () => {
     return (
         <div>
-            Spring!
             <StoryList></StoryList>
         </div>
     )

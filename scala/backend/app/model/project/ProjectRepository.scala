@@ -10,12 +10,12 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, val teamRepository: TeamRepository)(implicit ec: ExecutionContext) {
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
+  val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
 
-  private class ProjectTable(tag: Tag) extends Table[Project](tag, "Project") {
+  class ProjectTable(tag: Tag) extends Table[Project](tag, "Project") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def name = column[String]("name")
@@ -23,18 +23,23 @@ class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, val
     def description = column[String]("description")
     def teamId = column[Long]("teamId")
 
-    def team = foreignKey("Team", teamId, teamRepository.team)(_.id)
+    def sprintId = column[Option[Long]]("sprintId")
+    def backlogId = column[Option[Long]]("backlogId")
 
-    def * = (id, name, description, teamId) <> ((Project.apply _).tupled, Project.unapply)
+    def team = foreignKey("Team", teamId, teamRepository.team)(_.id)
+    def sprint = foreignKey("ProjectStage", sprintId, teamRepository.team)(_.id)
+    def backlog = foreignKey("ProjectStage", backlogId, teamRepository.team)(_.id)
+
+    def * = (id, name, description, teamId, sprintId, backlogId) <> ((Project.apply _).tupled, Project.unapply)
   }
 
-  private val project = TableQuery[ProjectTable]
+  val project = TableQuery[ProjectTable]
 
   def create(name: String, description: String, teamId: Long): Future[Project] = db.run {
-    (project.map(t => (t.name, t.description, t.teamId))
+    (project.map(t => (t.name, t.description, t.teamId, t.sprintId, t.backlogId))
       returning project.map(_.id)
-      into { case ((name, description, teamId), id) => Project(id, name, description, teamId)}
-      ) += (name, description, teamId)
+      into { case ((name, description, teamId, sprintId, backlogId), id) => Project(id, name, description, teamId, sprintId, backlogId)}
+      ) += (name, description, teamId, None, None)
   }
 
   def list(): Future[Seq[Project]] = db.run {
@@ -51,6 +56,11 @@ class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, val
   def update(id: Long, name: String, description: String): Future[Int] = db.run {
     val toUpdate = for { p <- project if p.id === id } yield (p.name, p.description)
     toUpdate.update((name, description))
+  }
+
+  def setBacklog(id: Long, backlogId: Long): Future[Long] = db.run {
+    val toUpdate = for { p <- project if p.id === id } yield p.backlogId
+    toUpdate.update(Some(backlogId)).map(result => id)
   }
 
   def delete(id: Long): Future[Int] = db.run {
