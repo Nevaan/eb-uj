@@ -58,6 +58,11 @@ class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, val
     toUpdate.update((name, description))
   }
 
+  def setSprintId(id: Long, sprintId: Option[Long]): Future[Int] = db.run {
+    val toUpdate = for { p <- project if p.id === id } yield ( p.sprintId )
+    toUpdate.update(sprintId)
+  }
+
   def setBacklog(id: Long, backlogId: Long): Future[Long] = db.run {
     val toUpdate = for { p <- project if p.id === id } yield p.backlogId
     toUpdate.update(Some(backlogId)).map(result => id)

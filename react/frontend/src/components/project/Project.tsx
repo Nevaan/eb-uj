@@ -168,7 +168,7 @@ const Project: FC<ProjectProps> = (props) => {
                                 <Sprint id={project.sprintId}></Sprint>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={1}>
-                                <Backlog id={project.backlogId}></Backlog>
+                                <Backlog id={project.backlogId} projectId={project.id} sprintStart={() => setTabIdx(0)}></Backlog>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={2}>
                                 <TeamDetails teamId={project.teamId}></TeamDetails>

@@ -1,11 +1,11 @@
 package model.projectstage
 
-import model.project.ProjectRepository
+import model.project.{Project, ProjectRepository}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProjectStageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, val projectRepository: ProjectRepository)(implicit ec: ExecutionContext) {
@@ -32,6 +32,9 @@ class ProjectStageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider
       returning projectStage.map(_.id)
       into { case ((description, projectId), id) => ProjectStage(id, description, projectId)}
       ) += (description, projectId)
+  }
+  def getProjectForBacklog(backlogId: Long): Future[Option[Project]] = db.run {
+    projectStage.filter(_.id === backlogId).flatMap(_.project).result.headOption
   }
 
 }
