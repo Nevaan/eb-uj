@@ -69,6 +69,7 @@ const Project: FC<ProjectProps> = (props) => {
                 setProject((project));
                 const { name, description } = project
                 setFormValues({ name, description })
+                setTabIdx(0)
             })
             .catch((err: Error) => console.log(err))
     }
@@ -165,10 +166,12 @@ const Project: FC<ProjectProps> = (props) => {
                                 <Tab label="Team" />
                             </Tabs>
                             <ProjectTab value={tabIdx} index={0}>
-                                <Sprint id={project.sprintId}></Sprint>
+                                <Sprint id={project.sprintId} projectId={project.id} completed={fetchProjectById}></Sprint>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={1}>
-                                <Backlog id={project.backlogId} projectId={project.id} sprintStart={() => setTabIdx(0)}></Backlog>
+                                <Backlog id={project.backlogId} projectId={project.id} sprintStart={() => { 
+                                    fetchProjectById();
+                                }}></Backlog>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={2}>
                                 <TeamDetails teamId={project.teamId}></TeamDetails>

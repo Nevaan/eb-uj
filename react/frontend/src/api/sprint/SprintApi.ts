@@ -16,4 +16,14 @@ export const SprintApi = {
         }).then(res => res.status === 200)
     },
 
+    complete: (projectId: number): Promise<boolean> => {
+        return fetch(`${sprintApiUrl}/${projectId}`, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json', 
+                credentials: "include"
+            }
+        }).then(res => res.status === 200)
+    }
+
 }

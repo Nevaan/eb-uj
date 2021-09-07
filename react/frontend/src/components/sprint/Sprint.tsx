@@ -2,8 +2,14 @@ import { FC, useEffect, useState } from "react";
 import { StoryModel } from "../../api/story/model/StoryModel";
 import { StoryApi } from "../../api/story/StoryApi";
 import StoryList from "../story/StoryList";
+import { Button } from "@material-ui/core";
+import { SprintApi } from "../../api/sprint/SprintApi";
+
+
 type SprintProps = {
     id: number | undefined;
+    projectId: number | undefined;
+    completed: () => void;
 }
 
 const Sprint: FC<SprintProps> = (props) => {
@@ -20,11 +26,25 @@ const Sprint: FC<SprintProps> = (props) => {
         }
     }
 
+    const completeSprint = (): void => {
+        if(props.projectId){ 
+            SprintApi.complete(props.projectId).then(_ => {
+                props.completed()
+            })
+        }
+    }
+
     return (
         <div>
             {
-                props.id ?
-                    <StoryList stories={sprint}></StoryList>
+                props.id ? (
+                    <div>
+                        <Button color="primary" variant="contained" onClick={completeSprint}>
+                            Complete sprint
+                        </Button>
+                        <StoryList stories={sprint}></StoryList>
+                    </div>
+                )
                     : (
                         <div>Sprint was not defined yet.</div>
                     )

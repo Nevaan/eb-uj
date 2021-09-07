@@ -65,7 +65,7 @@ class ProjectRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, val
 
   def setBacklog(id: Long, backlogId: Long): Future[Long] = db.run {
     val toUpdate = for { p <- project if p.id === id } yield p.backlogId
-    toUpdate.update(Some(backlogId)).map(result => id)
+    toUpdate.update(Some(backlogId)).map(_ => id)
   }
 
   def delete(id: Long): Future[Int] = db.run {

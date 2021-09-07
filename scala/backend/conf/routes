@@ -27,7 +27,7 @@ DELETE        /project/:id                          controllers.ProjectControlle
 GET           /sprint                               controllers.SprintController.get
 POST          /sprint                               controllers.SprintController.create
 PUT           /sprint                               controllers.SprintController.update
-DELETE        /sprint                               controllers.SprintController.delete
+DELETE        /sprint/:projectId                    controllers.SprintController.delete(projectId: Long)
 
 GET           /story                                controllers.StoryController.get
 GET           /story/:stageId                       controllers.StoryController.getByStageId(stageId: Long)

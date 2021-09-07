@@ -59,8 +59,13 @@ class SprintController @Inject()(silhouette: Silhouette[CookieEnv], val controll
   def update = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
     Ok("update sprint")
   }
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete sprint")
+  def delete(projectId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    projectRepository.setSprintId(projectId, None).map(res => {
+      res match {
+        case 1 => Ok
+        case _ => InternalServerError
+      }
+    })
   }
 
 }
