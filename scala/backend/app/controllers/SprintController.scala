@@ -1,7 +1,7 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.dto.StartSprint
+import model.dto.{StartSprint, UpdateSprint}
 import model.project.ProjectRepository
 import model.projectstage.ProjectStageRepository
 import play.api.libs.json.Json
@@ -53,11 +53,40 @@ class SprintController @Inject()(silhouette: Silhouette[CookieEnv], val controll
     }
   }
 
-  def get = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("get sprint")
+  def get(projectId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    projectStageRepository.getSprintByProjectId(projectId)
+      .map(res => {
+        res match {
+          case Some(sprint) => Ok(Json.toJson(sprint))
+          case None => NotFound
+        }
+      })
   }
-  def update = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("update sprint")
+  def update(projectId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+
+    val content = request.body
+    val jsonObject = content.asJson
+    val updateSprintDto: Option[UpdateSprint] =
+      jsonObject.flatMap(
+        Json.fromJson[UpdateSprint](_).asOpt
+      )
+
+    updateSprintDto match {
+      case Some(body) => {
+        projectStageRepository.getSprintByProjectId(projectId)
+          .map(res => {
+            res match {
+              case Some(sprint) => {
+                projectStageRepository.updateStage(sprint.id, body.description)
+                Ok("Sprint updated")
+              }
+              case None => NotFound
+            }
+          })
+      }
+      case None => Future { BadRequest }
+    }
+
   }
   def delete(projectId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     projectRepository.setSprintId(projectId, None).map(res => {

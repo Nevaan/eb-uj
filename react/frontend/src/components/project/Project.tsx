@@ -174,7 +174,7 @@ const Project: FC<ProjectProps> = (props) => {
                                 }}></Backlog>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={2}>
-                                <TeamDetails teamId={project.teamId}></TeamDetails>
+                                <TeamDetails teamId={project.teamId} allowAdding={false}></TeamDetails>
                             </ProjectTab>
                         </Paper>
                     </div>

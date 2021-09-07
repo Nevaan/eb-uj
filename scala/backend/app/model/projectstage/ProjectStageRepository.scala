@@ -37,4 +37,31 @@ class ProjectStageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider
     projectStage.filter(_.id === backlogId).flatMap(_.project).result.headOption
   }
 
+  def getBacklogByProjectId(projectId: Long): Future[Option[ProjectStage]] = db.run {
+    projectStage.join(projectRepository.project).filter(res =>
+      res._2.id === projectId
+    )
+      .filter(fx => fx._1.id === fx._2.backlogId)
+      .map(tup => tup._1)
+      .take(1)
+      .result
+      .headOption
+  }
+
+  def getSprintByProjectId(projectId: Long): Future[Option[ProjectStage]] = db.run {
+    projectStage.join(projectRepository.project).filter(res =>
+      res._2.id === projectId
+    )
+      .filter(fx => fx._1.id === fx._2.sprintId)
+      .map(tup => tup._1)
+      .take(1)
+      .result
+      .headOption
+  }
+
+  def updateStage(stageId: Long, description: String): Future[Int] = db.run {
+    val toUpdate = for { p <- projectStage if p.id === stageId } yield ( p.description )
+    toUpdate.update(description)
+  }
+
 }

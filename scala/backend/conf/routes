@@ -3,9 +3,9 @@ GET           /health                               controllers.HealthCheck.hc()
 GET           /authenticate                         controllers.AuthController.auth()
 GET           /auth                                 controllers.AuthController.loginPage()
 
-GET           /backlog                              controllers.BacklogController.get
+GET           /backlog/:projectId                   controllers.BacklogController.get(projectId: Long)
 POST          /backlog                              controllers.BacklogController.create
-PUT           /backlog                              controllers.BacklogController.update
+PUT           /backlog/:projectId                   controllers.BacklogController.update(projectId: Long)
 DELETE        /backlog                              controllers.BacklogController.delete
 
 GET           /comment                              controllers.CommentController.get
@@ -24,9 +24,9 @@ POST          /project                              controllers.ProjectControlle
 PUT           /project/:id                          controllers.ProjectController.update(id: Long)
 DELETE        /project/:id                          controllers.ProjectController.delete(id: Long)
 
-GET           /sprint                               controllers.SprintController.get
+GET           /sprint/:projectId                    controllers.SprintController.get(projectId: Long)
 POST          /sprint                               controllers.SprintController.create
-PUT           /sprint                               controllers.SprintController.update
+PUT           /sprint/:projectId                    controllers.SprintController.update(projectId: Long)
 DELETE        /sprint/:projectId                    controllers.SprintController.delete(projectId: Long)
 
 GET           /story                                controllers.StoryController.get

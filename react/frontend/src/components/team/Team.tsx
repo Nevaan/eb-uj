@@ -134,7 +134,7 @@ const Team: FC<TeamProps> = (props) => {
 
             </form>
 
-            <TeamDetails className={classes.details} teamId={teamId}> </TeamDetails>
+            <TeamDetails className={classes.details} teamId={teamId} allowAdding={true}> </TeamDetails>
         </div>
     )
 }

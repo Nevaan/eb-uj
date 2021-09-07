@@ -7,6 +7,7 @@ import AddEmployeeToTeam from './AddEmployeeToTeam';
 interface TeamDetailsProps  {
     teamId: number;
     className?: string;
+    allowAdding: boolean;
 }
 
 const TeamDetails: FC<TeamDetailsProps> = (props: TeamDetailsProps) => {
@@ -48,7 +49,11 @@ const TeamDetails: FC<TeamDetailsProps> = (props: TeamDetailsProps) => {
 
     return (
         <div className={props.className}>
-            <AddEmployeeToTeam employees={unassignedEmployees} addEmployeeCallback={assignEmployeeCallback}></AddEmployeeToTeam>     
+            {
+                props.allowAdding ? 
+                <AddEmployeeToTeam employees={unassignedEmployees} addEmployeeCallback={assignEmployeeCallback}></AddEmployeeToTeam>     
+                : <div></div>
+            }
             {
                 employees.length ? (
                     <EmployeeList employees={employees}></EmployeeList>

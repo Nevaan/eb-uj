@@ -4,7 +4,8 @@ import { StoryApi } from "../../api/story/StoryApi";
 import StoryList from "../story/StoryList";
 import { Button } from "@material-ui/core";
 import { SprintApi } from "../../api/sprint/SprintApi";
-
+import UpdateProjectStage from "../stage/UpdateProjectStage";
+import { ProjectStage } from "../../api/stage/model/ProjectStage";
 
 type SprintProps = {
     id: number | undefined;
@@ -15,8 +16,12 @@ type SprintProps = {
 const Sprint: FC<SprintProps> = (props) => {
 
     const [sprint, setSprint] = useState<StoryModel[]>([]);
+    const [stage, setStage] = useState<ProjectStage>();
 
-    useEffect(() => fetchSprint(), []);
+    useEffect(() => {
+        fetchSprint()
+        fetchStage()
+    }, []);
 
     const fetchSprint = (): void => {
         if (props.id) {
@@ -27,10 +32,17 @@ const Sprint: FC<SprintProps> = (props) => {
     }
 
     const completeSprint = (): void => {
-        if(props.projectId){ 
+        if (props.projectId) {
             SprintApi.complete(props.projectId).then(_ => {
                 props.completed()
             })
+        }
+    }
+
+    const fetchStage = () => {
+        if (props.projectId) {
+            SprintApi.get(props.projectId)
+                .then(result => setStage(result))
         }
     }
 
@@ -42,6 +54,14 @@ const Sprint: FC<SprintProps> = (props) => {
                         <Button color="primary" variant="contained" onClick={completeSprint}>
                             Complete sprint
                         </Button>
+                        {
+                            stage ? 
+                            <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: { description: string }) => {
+                                if (props.projectId) {
+                                    SprintApi.update({ id: props.projectId, description: model.description })
+                                }
+                            }}></UpdateProjectStage> : <div></div>
+                        }
                         <StoryList stories={sprint}></StoryList>
                     </div>
                 )
