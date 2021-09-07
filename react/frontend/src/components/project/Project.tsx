@@ -165,10 +165,10 @@ const Project: FC<ProjectProps> = (props) => {
                                 <Tab label="Team" />
                             </Tabs>
                             <ProjectTab value={tabIdx} index={0}>
-                                <Sprint></Sprint>
+                                <Sprint id={project.sprintId}></Sprint>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={1}>
-                                <Backlog></Backlog>
+                                <Backlog id={project.backlogId}></Backlog>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={2}>
                                 <TeamDetails teamId={project.teamId}></TeamDetails>

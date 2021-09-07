@@ -30,6 +30,7 @@ PUT           /sprint                               controllers.SprintController
 DELETE        /sprint                               controllers.SprintController.delete
 
 GET           /story                                controllers.StoryController.get
+GET           /story/:stageId                       controllers.StoryController.getByStageId(stageId: Long)
 POST          /story                                controllers.StoryController.create
 PUT           /story                                controllers.StoryController.update
 DELETE        /story                                controllers.StoryController.delete

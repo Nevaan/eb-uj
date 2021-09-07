@@ -3,4 +3,6 @@ export interface ProjectModel {
     name: string;
     description: string;
     teamId: number;
+    sprintId?: number;
+    backlogId?: number;
 }

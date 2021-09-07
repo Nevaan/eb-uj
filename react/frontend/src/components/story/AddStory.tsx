@@ -1,6 +1,7 @@
-
 import { CSSProperties, FC, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
+import { CreateStory } from "../../api/story/model/CreateStory";
+import { StoryApi } from "../../api/story/StoryApi";
 import { Button } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import { useForm } from "../../util/form/form";
@@ -8,10 +9,9 @@ import Modal from '@material-ui/core/Modal';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import { CreateEmployee } from "../../api/employee/model/CreateEmployee";
-import { EmployeeApi } from "../../api/employee/EmployeeApi";
 
-type AddEmployeeProps = {
+type AddStoryProps = {
+    stageId: number;
     success: () => void;
 }
 
@@ -60,25 +60,27 @@ const useStyles = makeStyles({
     }
 });
 
-const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
+const AddStory: FC<AddStoryProps> = (props) => {
+
     const classes = useStyles();
-    const [addingEmployee, setAddingEmployee] = useState<boolean>(false);
+    const [addingStory, setAddingStory] = useState<boolean>(false);
 
     const initialState = {
         name: "",
-        surname: "",
+        description: "",
     };
 
-    const { onChange, onSubmit, formValues } = useForm<CreateEmployee>(
+    const { onChange, onSubmit, formValues } = useForm<CreateStory>(
         createEmployeeCallback,
         initialState
     );
 
     async function createEmployeeCallback() {
-        EmployeeApi
-            .create(formValues)
+        const { stageId } = props;
+        StoryApi
+            .create({ ...formValues, stageId })
             .then(() => {
-                setAddingEmployee(false);
+                setAddingStory(false);
                 props.success();
             });
     }
@@ -86,18 +88,18 @@ const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
     return (
         <div className={classes.wrapper}>
             <Modal
-                open={addingEmployee}
+                open={addingStory}
             >
                 <div className={classes.container}>
                     <div className={classes.paper}>
-                        <h2 className={classes.title}>Add Employee</h2>
+                        <h2 className={classes.title}>Add Story</h2>
 
                         <form className={classes.form} autoComplete="off"
                             onSubmit={onSubmit}
                         >
                             <TextField
                                 className={classes.formElement}
-                                label="Employee name"
+                                label="Story name"
                                 name="name"
                                 variant="outlined"
                                 size="small"
@@ -105,16 +107,16 @@ const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
                             />
                             <TextField
                                 className={classes.formElement}
-                                label="Surname"
+                                label="Description"
                                 variant="outlined"
                                 size="small"
                                 onChange={onChange}
-                                name="surname"
+                                name="description"
                             />
 
                             <div className={classes.buttons}>
                                 <Button variant="contained" color="secondary" className={classes.button}
-                                    onClick={() => setAddingEmployee(false)}
+                                    onClick={() => setAddingStory(false)}
                                 >
                                     Cancel
                                 </Button>
@@ -126,12 +128,11 @@ const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
                     </div>
                 </div>
             </Modal>
-            <Fab color="primary" aria-label="add" style={styles.add} onClick={() => setAddingEmployee(true)}>
+            <Fab color="primary" aria-label="add" style={styles.add} onClick={() => setAddingStory(true)}>
                 <AddIcon />
             </Fab>
         </div>
-
     )
 }
 
-export default AddEmployee;
+export default AddStory;
