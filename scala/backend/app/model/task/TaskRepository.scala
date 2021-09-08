@@ -1,0 +1,61 @@
+package model.task
+
+import play.api.db.slick.DatabaseConfigProvider
+import slick.jdbc.JdbcProfile
+
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
+
+@Singleton
+class TaskRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+  val dbConfig = dbConfigProvider.get[JdbcProfile]
+
+  import dbConfig._
+  import profile.api._
+
+  class TaskTable(tag: Tag) extends Table[Task](tag, "Task") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def description = column[String]("description")
+    def storyId = column[Long]("storyId")
+    def parentId = column[Option[Long]]("parentId")
+    def assigneeId = column[Option[Long]]("assigneeId")
+
+    def * = (id, description, storyId, parentId, assigneeId) <> ((Task.apply _).tupled, Task.unapply)
+  }
+
+  val task = TableQuery[TaskTable]
+
+  def create(description: String, storyId: Long, parentId: Option[Long], assigneeId: Option[Long]): Future[Task] = db.run {
+    (task.map(t => (t.description, t.storyId, t.parentId, t.assigneeId))
+      returning task.map(_.id)
+      into { case((description, storyId, parentId, assigneeId), id) => Task(id, description, storyId, parentId, assigneeId) }
+      ) += (description, storyId, parentId, assigneeId)
+  }
+
+  def getTasksForStory(storyId: Long): Future[Seq[Task]] = db.run {
+    task.filter(_.storyId === storyId).result
+  }
+
+  def getSubtasks(taskId: Long): Future[Seq[Task]] = db.run {
+    task.filter(_.parentId === taskId).result
+  }
+
+  def getTaskById(taskId: Long): Future[Option[Task]] = db.run {
+    task.filter(_.id === taskId).filter(_.parentId.isEmpty).take(1).result.headOption
+  }
+
+  def getSubtaskById(taskId: Long): Future[Option[Task]] = db.run {
+    task.filter(_.id === taskId).filter(_.parentId.isDefined).take(1).result.headOption
+  }
+
+  def update(id: Long, description: String): Future[Int] = db.run {
+    val toUpdate = for { t <- task if t.id === id } yield (t.description)
+    toUpdate.update(description)
+  }
+
+  def assignEmployee(id: Long, employeeId: Option[Long]): Future[Int] = db.run {
+    val toUpdate = for { t <- task if t.id === id } yield (t.assigneeId)
+    toUpdate.update(employeeId)
+  }
+
+}

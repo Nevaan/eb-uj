@@ -36,4 +36,8 @@ class StoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(impli
     story.filter(_.stageId === stageId).result
   }
 
+  def get(id: Long): Future[Option[Story]] = db.run {
+    story.filter(_.id === id).take(1).result.headOption
+  }
+
 }

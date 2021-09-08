@@ -1,12 +1,9 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.Dumb
-import model.user.User
 
 import javax.inject._
 import play.api.mvc._
-import play.api.libs.json._
 import security.environment.CookieEnv
 
 @Singleton

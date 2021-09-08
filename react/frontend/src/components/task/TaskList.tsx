@@ -23,16 +23,7 @@ const TaskList: FC<TaskListProps> = () => {
     const history = useHistory();
 
     //TODO: real data
-    const [tasks, setTasks] = useState<TaskModel[]>([
-        {
-            id: 1,
-            description: "task1"
-        },
-        {
-            id: 2,
-            description: "task2"
-        }
-    ]);
+    const [tasks, setTasks] = useState<TaskModel[]>([]);
 
     return (
         <AppTableWrapper columns={columns}>

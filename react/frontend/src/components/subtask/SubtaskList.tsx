@@ -23,16 +23,7 @@ const SubtaskList: FC<SubtaskListProps> = () => {
     const history = useHistory();
 
     //TODO: real data
-    const [subtasks, setSubtasks] = useState<SubtaskModel[]>([
-        {
-            id: 1,
-            description: "subtask1"
-        },
-        {
-            id: 2,
-            description: "subtask2"
-        }
-    ]);
+    const [subtasks, setSubtasks] = useState<SubtaskModel[]>([]);
 
     return (
         <AppTableWrapper columns={columns}>
