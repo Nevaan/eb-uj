@@ -26,6 +26,8 @@ const SubtaskList: FC<SubtaskListProps> = () => {
     const [subtasks, setSubtasks] = useState<SubtaskModel[]>([]);
 
     return (
+        <div>
+            <h1>Subtasks: </h1>
         <AppTableWrapper columns={columns}>
             {subtasks.map((subtask) => {
                 return (
@@ -43,6 +45,7 @@ const SubtaskList: FC<SubtaskListProps> = () => {
                 );
             })}
         </AppTableWrapper>
+        </div>
     )
 }
 

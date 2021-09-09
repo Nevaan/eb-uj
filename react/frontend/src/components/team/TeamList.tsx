@@ -54,6 +54,7 @@ const TeamList: FC<TeamListProps> = () => {
 
     return (
         <div style={styles.listContainer}>
+            <h1>Teams: </h1>
             <div>
                 {
                     teams.length ?

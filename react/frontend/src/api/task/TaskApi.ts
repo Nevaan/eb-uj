@@ -5,7 +5,7 @@ const taskApiUrl = `${ apiConfig.baseUrl }task`;
 
 export const TaskApi = {
 
-    create: (input: {description: string, storyId: number, assigneeId: number }): Promise<void> => {
+    create: (input: {description: string, storyId: number, assigneeId?: number }): Promise<void> => {
         return fetch(taskApiUrl, {
             method: 'POST',
             body: JSON.stringify(input),
@@ -27,8 +27,8 @@ export const TaskApi = {
         .then(res => res.json())
     },
 
-    getListForProject: (id: number): Promise<TaskModel[]> => {
-        return fetch(`${taskApiUrl}/all/${id}`, { 
+    getListForStory: (storyId: number): Promise<TaskModel[]> => {
+        return fetch(`${taskApiUrl}/all/${storyId}`, { 
             method: 'GET', 
             headers: { 
                 'Content-Type': 'application/json', 

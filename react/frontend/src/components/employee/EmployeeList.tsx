@@ -31,6 +31,8 @@ const EmployeeList: FC<EmployeeListProps> = (props: EmployeeListProps) => {
     const history = useHistory();
 
     return (
+        <div>
+            <h1>Employees: </h1>
         <AppTableWrapper columns={columns}>
             {props.employees.map((employee) => {
                 return (
@@ -48,6 +50,7 @@ const EmployeeList: FC<EmployeeListProps> = (props: EmployeeListProps) => {
                 );
             })}
         </AppTableWrapper>
+        </div>
     )
 }
 

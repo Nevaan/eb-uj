@@ -29,21 +29,21 @@ POST          /sprint                                  controllers.SprintControl
 PUT           /sprint/:projectId                       controllers.SprintController.update(projectId: Long)
 DELETE        /sprint/:projectId                       controllers.SprintController.delete(projectId: Long)
 
-GET           /story                                   controllers.StoryController.get
-GET           /story/:stageId                          controllers.StoryController.getByStageId(stageId: Long)
+GET           /story/:id                               controllers.StoryController.get(id: Long)
+GET           /story/stage/:stageId                    controllers.StoryController.getByStageId(stageId: Long)
 POST          /story                                   controllers.StoryController.create
-PUT           /story                                   controllers.StoryController.update
+PUT           /story/:id                               controllers.StoryController.update(id: Long)
 DELETE        /story                                   controllers.StoryController.delete
 
 GET           /subtask/:id                             controllers.SubtaskController.get(id: Long)
-GET           /subtask/all/:taskId                     controllers.SubtaskController.getSubtasksForProject(taskId: Long)
+GET           /subtask/all/:taskId                     controllers.SubtaskController.getSubtasks(taskId: Long)
 POST          /subtask                                 controllers.SubtaskController.create
 PUT           /subtask/:id                             controllers.SubtaskController.update(id: Long)
 PUT           /subtask/:id/employee/:employeeId        controllers.SubtaskController.assignEmployee(id: Long, employeeId: Long)
 DELETE        /subtask                                 controllers.SubtaskController.delete
 
 GET           /task/:id                                controllers.TaskController.get(id: Long)
-GET           /task/all/:projectId                     controllers.TaskController.getTasksForProject(projectId: Long)
+GET           /task/all/:storyId                       controllers.TaskController.getTasksForStory(storyId: Long)
 POST          /task                                    controllers.TaskController.create
 PATCH         /task/:id                                controllers.TaskController.update(id: Long)
 PATCH         /task/:id/employee/:employeeId           controllers.TaskController.assignEmployee(id: Long, employeeId: Long)

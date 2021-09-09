@@ -87,6 +87,7 @@ const ProjectList: FC<ProjectListProps> = () => {
 
     return (
         <div style={styles.listContainer}>
+            <h1>Projects: </h1>
             <div style={styles.table}>
                 {
                     projects.length ?

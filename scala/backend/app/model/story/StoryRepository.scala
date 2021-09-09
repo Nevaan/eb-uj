@@ -40,4 +40,9 @@ class StoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(impli
     story.filter(_.id === id).take(1).result.headOption
   }
 
+  def update(id: Long, name: String, description: String, assigneeId: Option[Long]): Future[Int] = db.run {
+    val toUpdate = for { s <- story if s.id === id } yield (s.name, s.description, s.assigneeId)
+    toUpdate.update((name, description, assigneeId))
+  }
+
 }

@@ -37,6 +37,14 @@ class ProjectStageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider
     projectStage.filter(_.id === backlogId).flatMap(_.project).result.headOption
   }
 
+  def getProjectForStage(id: Long): Future[Option[Project]] = db.run {
+    projectStage.filter(_.id===id).take(1).join(projectRepository.project)
+      .map(x => x._2)
+      .take(1)
+      .result
+      .headOption
+  }
+
   def getBacklogByProjectId(projectId: Long): Future[Option[ProjectStage]] = db.run {
     projectStage.join(projectRepository.project).filter(res =>
       res._2.id === projectId

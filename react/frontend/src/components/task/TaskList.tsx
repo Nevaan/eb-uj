@@ -1,12 +1,17 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {TaskModel} from "../../api/task/model/TaskModel";
 import {Column} from "../table/column";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";
+import AddTask from "./AddTask";
+import { TaskApi } from "../../api/task/TaskApi";
 
-type TaskListProps = {}
+type TaskListProps = {
+    storyId: number;
+    teamId: number;
+}
 
 const columns: Column<'id' | 'description'>[] = [
     {id: 'id', label: 'Id', minWidth: 170},
@@ -18,15 +23,28 @@ const columns: Column<'id' | 'description'>[] = [
     }
 ];
 
-const TaskList: FC<TaskListProps> = () => {
+const TaskList: FC<TaskListProps> = (props) => {
 
     const history = useHistory();
 
-    //TODO: real data
     const [tasks, setTasks] = useState<TaskModel[]>([]);
 
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+
+    const fetchTasks = (): void => {
+        if (props.storyId) {
+            TaskApi.getListForStory(props.storyId)
+                .then(tasks => setTasks((tasks)))
+                .catch((err: Error) => console.log(err))
+        }
+    }
+
     return (
-        <AppTableWrapper columns={columns}>
+    <div>
+        <h1>Tasks: </h1>
+    <AppTableWrapper columns={columns}>
             {tasks.map((task) => {
                 return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={task.id}
@@ -43,6 +61,9 @@ const TaskList: FC<TaskListProps> = () => {
                 );
             })}
         </AppTableWrapper>
+        <AddTask storyId={props.storyId} teamId={props.teamId} success={fetchTasks}></AddTask>
+    </div>
+    
     )
 }
 
