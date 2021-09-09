@@ -11,10 +11,13 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 import model.dto.UpdateSubtask
+import model.projectstage.ProjectStageRepository
+import model.story.StoryRepository
 
 @Singleton
 class SubtaskController @Inject()(silhouette: Silhouette[CookieEnv], val controllerComponents: ControllerComponents,
-                                  taskRepository: TaskRepository) extends BaseController {
+                                  taskRepository: TaskRepository, storyRepository: StoryRepository,
+                                  projectStageRepository: ProjectStageRepository) extends BaseController {
 
   def create = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     val content = request.body
@@ -69,6 +72,15 @@ class SubtaskController @Inject()(silhouette: Silhouette[CookieEnv], val control
 
   def assignEmployee(id: Long, employeeId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     taskRepository.assignEmployee(id, Some(employeeId)).map(res => {
+      res match {
+        case 1 => Ok("Updated assignee")
+        case _ => InternalServerError
+      }
+    })
+  }
+
+  def deleteAssignment(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    taskRepository.assignEmployee(id, None).map(res => {
       res match {
         case 1 => Ok("Updated assignee")
         case _ => InternalServerError

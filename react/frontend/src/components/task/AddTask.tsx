@@ -109,7 +109,7 @@ const AddTask: FC<AddTaskProps> = (props) => {
                                 name="description"
                             />
 
-                            <SelectEmployee onChange={onChange} value={formValues.assigneeId} class={classes.formElement} teamId={props.teamId}></SelectEmployee>
+                            <SelectEmployee onChange={onChange} value={formValues.assigneeId} class={classes.formElement} teamId={props.teamId} formName="assigneeId" ></SelectEmployee>
 
                             <div className={classes.buttons}>
                                 <Button variant="contained" color="secondary" className={classes.button}

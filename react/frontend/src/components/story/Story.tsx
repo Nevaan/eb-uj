@@ -89,7 +89,7 @@ const Story: FC<StoryProps> = (props) => {
                                     onChange={onChange}
                                     variant="outlined"
                                 />
-                            <SelectEmployee onChange={onChange} value={formValues.assigneeId} class="" teamId={story.teamId}></SelectEmployee>
+                            <SelectEmployee onChange={onChange} value={formValues.assigneeId} class="" teamId={story.teamId} formName="assigneeId"></SelectEmployee>
                             </div>
 
                         </form>

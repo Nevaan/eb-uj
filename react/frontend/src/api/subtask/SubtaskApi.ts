@@ -49,14 +49,24 @@ export const SubtaskApi = {
         }).then(_ => {})
     },
 
-    assignEmployee: (id: number, employeeId: number): Promise<void> => {
-        return fetch(`${subtaskApiUrl}/${id}/employee/${employeeId}`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json', 
-                credentials: "include"
-            }
-        }).then(_ => {})
+    assignEmployee: (id: number, employeeId?: number): Promise<void> => {
+        if(employeeId) {
+            return fetch(`${subtaskApiUrl}/${id}/employee/${employeeId}`, {
+                method: 'PATCH',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    credentials: "include"
+                }
+            }).then(_ => {})
+        } else {
+            return fetch(`${subtaskApiUrl}/${id}/employee`, {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    credentials: "include"
+                }
+            }).then(_ => {})
+        }
     }
 
 }

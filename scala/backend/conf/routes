@@ -40,6 +40,7 @@ GET           /subtask/all/:taskId                     controllers.SubtaskContro
 POST          /subtask                                 controllers.SubtaskController.create
 PUT           /subtask/:id                             controllers.SubtaskController.update(id: Long)
 PUT           /subtask/:id/employee/:employeeId        controllers.SubtaskController.assignEmployee(id: Long, employeeId: Long)
+DELETE        /subtask/:id/employee                    controllers.SubtaskController.deleteAssignment(id: Long)
 DELETE        /subtask                                 controllers.SubtaskController.delete
 
 GET           /task/:id                                controllers.TaskController.get(id: Long)
@@ -47,6 +48,7 @@ GET           /task/all/:storyId                       controllers.TaskControlle
 POST          /task                                    controllers.TaskController.create
 PATCH         /task/:id                                controllers.TaskController.update(id: Long)
 PATCH         /task/:id/employee/:employeeId           controllers.TaskController.assignEmployee(id: Long, employeeId: Long)
+DELETE        /task/:id/employee                       controllers.TaskController.deleteAssignment(id: Long)
 DELETE        /task                                    controllers.TaskController.delete
 
 GET           /team                                    controllers.TeamController.get

@@ -1,8 +1,11 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.dto.{AddTask, UpdateTask}
+import model.dto.{AddTask, GetStory, GetTask, UpdateTask}
+import model.projectstage.ProjectStageRepository
+import model.story.StoryRepository
 import model.task.TaskRepository
+import play.api.Logging
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
 import security.environment.CookieEnv
@@ -13,7 +16,8 @@ import scala.concurrent.Future
 
 @Singleton
 class TaskController @Inject()(silhouette: Silhouette[CookieEnv], val controllerComponents: ControllerComponents,
-                               taskRepository: TaskRepository) extends BaseController {
+                               taskRepository: TaskRepository, storyRepository: StoryRepository,
+                               projectStageRepository: ProjectStageRepository) extends BaseController with Logging {
 
   def create = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     val content = request.body
@@ -37,10 +41,31 @@ class TaskController @Inject()(silhouette: Silhouette[CookieEnv], val controller
   }
 
   def get(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
-    taskRepository.getTaskById(id) map { task =>
+    taskRepository.getTaskById(id) flatMap { task =>
       task match {
-        case Some(t) => Ok(Json.toJson(t))
-        case None => NotFound
+        case Some(t) => {
+
+            storyRepository.get(t.storyId).flatMap(maybeStory => {
+            maybeStory match {
+              case Some(story) => {
+                projectStageRepository.getProjectForStage(story.stageId)
+                  .map(maybeProject => {
+                    maybeProject match {
+                      case Some(project) => {
+
+                        Ok(Json.toJson(GetTask(t.id, t.description, t.storyId, t.parentId,
+                          t.employeeId, project.teamId)))
+
+                      }
+                      case None => NotFound
+                    }
+                  })
+              }
+              case None => Future { NotFound }
+            }
+          })
+        }
+        case None => Future { NotFound }
       }
     }
   }
@@ -67,6 +92,15 @@ class TaskController @Inject()(silhouette: Silhouette[CookieEnv], val controller
 
   def assignEmployee(id: Long, employeeId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     taskRepository.assignEmployee(id, Some(employeeId)).map(res => {
+      res match {
+        case 1 => Ok("Updated assignee")
+        case _ => InternalServerError
+      }
+    })
+  }
+
+  def deleteAssignment(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
+    taskRepository.assignEmployee(id, None).map(res => {
       res match {
         case 1 => Ok("Updated assignee")
         case _ => InternalServerError

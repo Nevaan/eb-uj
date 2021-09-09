@@ -1,4 +1,5 @@
 import { apiConfig } from '../ApiConfig';
+import { GetTaskModel } from './model/GetTaskModel';
 import { TaskModel } from './model/TaskModel';
 
 const taskApiUrl = `${ apiConfig.baseUrl }task`;
@@ -16,7 +17,7 @@ export const TaskApi = {
         }).then(res => res.json())
     },
 
-    get: (id: number): Promise<TaskModel> => {
+    get: (id: number): Promise<GetTaskModel> => {
         return fetch(`${taskApiUrl}/${id}`, { 
             method: 'GET', 
             headers: { 
@@ -49,14 +50,25 @@ export const TaskApi = {
         }).then(_ => {})
     },
 
-    assignEmployee: (id: number, employeeId: number): Promise<void> => {
-        return fetch(`${taskApiUrl}/${id}/employee/${employeeId}`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json', 
-                credentials: "include"
-            }
-        }).then(_ => {})
+    assignEmployee: (id: number, employeeId?: number): Promise<void> => {
+        if (employeeId) {
+            return fetch(`${taskApiUrl}/${id}/employee/${employeeId}`, {
+                method: 'PATCH',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    credentials: "include"
+                }
+            }).then(_ => {})
+        } else {
+            return fetch(`${taskApiUrl}/${id}/employee`, {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    credentials: "include"
+                }
+            }).then(_ => {})
+        }
+        
     }
 
 }

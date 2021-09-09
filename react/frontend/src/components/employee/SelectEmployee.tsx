@@ -10,6 +10,7 @@ type SelectEmployeeProps = {
     value: any;
     class: string;
     teamId: number;
+    formName: string;
 }
 
 const SelectEmployee: FC<SelectEmployeeProps> = (props) => {
@@ -31,7 +32,7 @@ const SelectEmployee: FC<SelectEmployeeProps> = (props) => {
             id="select-assignee"
             onChange={props.onChange}
             value={props.value}
-            name="assigneeId"
+            name={props.formName}
             className={props.class}
         >
             <MenuItem value={undefined}>
