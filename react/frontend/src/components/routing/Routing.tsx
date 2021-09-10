@@ -3,13 +3,14 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { PublicRoutes, SecuredRoutes } from "../../config/routes";
 import { useAuthState } from "../../context/auth/context";
 import Drawer from "../Drawer";
+import Profile from "../profile/Profile";
 
 
 type RoutingProps = {}
 
 const Routing: FC<RoutingProps> = () => {
 
-    const { loggedIn } = useAuthState();
+    const { loggedIn, profile } = useAuthState();
 
     return (
         <div>
@@ -17,12 +18,11 @@ const Routing: FC<RoutingProps> = () => {
             <Switch>
                 {loggedIn ?
                     (
-                        SecuredRoutes.map(route => (
-                            <Route key={route.path} exact={route.exact} path={route.path} component={route.component} ></Route>
-                        )).concat(
-                            <Redirect to='/' />
-                        )
-
+                       SecuredRoutes.map(route => (
+                                <Route key={route.path} exact={route.exact} path={route.path} component={route.component} ></Route>
+                            )).concat(
+                                <Redirect to='/' />
+                            )
                     ) :
                     (
                         PublicRoutes.map(route => (

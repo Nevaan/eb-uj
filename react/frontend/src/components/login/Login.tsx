@@ -11,15 +11,18 @@ const authenticate = () => {
 
 const Login: FC<LoginProps> = () => {
     return (
-        <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            startIcon={<GitHubIcon />}
-            onClick={authenticate}
-        >
-            Login with GitHub
-        </Button>
+        <div>
+            <h1>Scrum tool</h1>
+            <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<GitHubIcon />}
+                onClick={authenticate}
+            >
+                Login with GitHub
+            </Button>
+        </div>
     )
 }
 

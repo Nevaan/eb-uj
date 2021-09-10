@@ -1,10 +1,10 @@
 import React, { useReducer, FC, Dispatch } from 'react';
-import { initialState, AuthReducer, AuthActions } from './reducer';
+import { initialState, AuthReducer, AuthActions, AuthState } from './reducer';
 interface IContextProps {
 	(x: AuthActions) : void;
 }
 
-export const AuthStateContext = React.createContext({ loggedIn: false });
+export const AuthStateContext = React.createContext<AuthState>({ loggedIn: false });
 const AuthDispatchContext = React.createContext<Dispatch<AuthActions>>({} as IContextProps);
 
 
