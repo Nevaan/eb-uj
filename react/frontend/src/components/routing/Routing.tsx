@@ -3,14 +3,12 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { PublicRoutes, SecuredRoutes } from "../../config/routes";
 import { useAuthState } from "../../context/auth/context";
 import Drawer from "../Drawer";
-import Profile from "../profile/Profile";
-
 
 type RoutingProps = {}
 
 const Routing: FC<RoutingProps> = () => {
 
-    const { loggedIn, profile } = useAuthState();
+    const { loggedIn } = useAuthState();
 
     return (
         <div>
