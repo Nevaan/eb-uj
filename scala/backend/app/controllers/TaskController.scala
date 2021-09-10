@@ -1,7 +1,7 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.dto.{AddTask, GetStory, GetTask, UpdateTask}
+import model.dto.{AddTask, GetTask, UpdateTask}
 import model.projectstage.ProjectStageRepository
 import model.story.StoryRepository
 import model.task.TaskRepository

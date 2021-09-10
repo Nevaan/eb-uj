@@ -7,6 +7,8 @@ import { useForm } from "../../util/form/form";
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import SelectEmployee from '../employee/SelectEmployee';
+import TimeEntryList from '../timeentry/TimeEntryList';
+
 interface SubtaskRouteParams {
     subtaskId: string;
 }
@@ -76,6 +78,7 @@ const Subtask: FC<SubtaskProps> = (props) => {
                                 </Button>
                     </div>
                     <SelectEmployee onChange={onChange} value={formValues.employeeId} class="" teamId={subtask.teamId} formName="employeeId"></SelectEmployee>
+                    <TimeEntryList subtaskId={subtask.id} teamId={subtask.teamId}></TimeEntryList>
                 </form>
                 </div>:
                 <div>Loading subtask...</div>

@@ -59,7 +59,9 @@ POST          /team/:id/employee/:employeeId           controllers.TeamControlle
 PUT           /team/:id                                controllers.TeamController.update(id: Long)
 DELETE        /team/:id                                controllers.TeamController.delete(id: Long)
 
-GET           /timeentry                               controllers.TimeEntryController.get
+GET           /timeentry/subtask/:subtaskId            controllers.TimeEntryController.getTimeEntriesForSubtask(subtaskId: Long)
+GET           /timeentry/task/:taskId                  controllers.TimeEntryController.getTimeEntriesCountForTask(taskId: Long)
+GET           /timeentry/story/:storyId                controllers.TimeEntryController.getTimeEntriesCountForStory(storyId: Long)
 POST          /timeentry                               controllers.TimeEntryController.create
 PUT           /timeentry                               controllers.TimeEntryController.update
 DELETE        /timeentry                               controllers.TimeEntryController.delete

@@ -68,7 +68,7 @@ const AddTeam: FC<AddTeamProps> = (props: AddTeamProps) => {
         description: "",
     };
 
-    const { onChange, onSubmit, formValues } = useForm<CreateTeam>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<CreateTeam>(
         initialState,
         createTeamCallback
     );
@@ -79,6 +79,7 @@ const AddTeam: FC<AddTeamProps> = (props: AddTeamProps) => {
             .then(() => {
                 setAddingTeam(false);
                 props.success();
+                setFormValues(initialState);
             });
     }
 

@@ -33,11 +33,15 @@ class TaskRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
   }
 
   def getTasksForStory(storyId: Long): Future[Seq[Task]] = db.run {
-    task.filter(_.storyId === storyId).result
+    task.filter(_.storyId === storyId).filter(_.parentId.isEmpty).result
   }
 
   def getSubtasks(taskId: Long): Future[Seq[Task]] = db.run {
     task.filter(_.parentId === taskId).result
+  }
+
+  def getSubtasksForTaskIdList(taskIds: Seq[Long]): Future[Seq[Task]] = db.run {
+    task.filter(_.parentId inSet taskIds).result
   }
 
   def getTaskById(taskId: Long): Future[Option[Task]] = db.run {

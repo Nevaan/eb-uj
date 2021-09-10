@@ -62,7 +62,6 @@ const useStyles = makeStyles({
     }
 });
 
-
 const AddSubtask: FC<AddSubtaskProps> = (props) => {
     const classes = useStyles();
     const [addingSubtask, setAddingSubtask] = useState<boolean>(false);
@@ -71,7 +70,7 @@ const AddSubtask: FC<AddSubtaskProps> = (props) => {
         description: ""
     };
 
-    const { onChange, onSubmit, formValues } = useForm<AddSubtaskModel>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<AddSubtaskModel>(
         initialState,
         createSubtaskCallback
     );
@@ -81,6 +80,7 @@ const AddSubtask: FC<AddSubtaskProps> = (props) => {
             .create({ ...formValues, storyId: props.storyId, taskId: props.taskId } )
             .then(() => {
                 setAddingSubtask(false);
+                setFormValues(initialState);
                 props.success();
             });
     }

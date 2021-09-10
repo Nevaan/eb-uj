@@ -72,7 +72,7 @@ const AddTask: FC<AddTaskProps> = (props) => {
         description: ""
     };
 
-    const { onChange, onSubmit, formValues } = useForm<AddTaskModel>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<AddTaskModel>(
         initialState,
         createTaskCallback
     );
@@ -83,6 +83,7 @@ const AddTask: FC<AddTaskProps> = (props) => {
             .then(() => {
                 setAddingTask(false);
                 props.success();
+                setFormValues(initialState);
             });
     }
 

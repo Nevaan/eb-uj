@@ -8,6 +8,7 @@ import SelectEmployee from '../employee/SelectEmployee';
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import { GetTaskModel } from "../../api/task/model/GetTaskModel";
+import { TimeEntryApi } from "../../api/timeentry/TimeEntryApi";
 interface TaskRouteParams {
     taskId: string;
 }
@@ -19,9 +20,11 @@ interface TaskProps extends RouteComponentProps<TaskRouteParams> {
 const Task: FC<TaskProps> = (props) => {
 
     const [task, setTask] = useState<GetTaskModel>();
+    const [totalTimeCount, setTotalTimeCount] = useState<number>(0);
 
     useEffect(() => {
         fetchTask();
+        fetchTotalTime();
     }, []);
 
     const fetchTask = (): void => {
@@ -36,6 +39,14 @@ const Task: FC<TaskProps> = (props) => {
         }
     }
 
+    const fetchTotalTime = (): void => {
+        const taskId = props.match.params.taskId;
+        if (taskId) {
+            TimeEntryApi.countForTask(+taskId)
+            .then(count => setTotalTimeCount(count.totalCount))
+        }
+    };
+
     const { onChange, onSubmit, formValues, setFormValues } = useForm<{ description: string, employeeId?: number }>(
         {
             description: ""
@@ -49,7 +60,10 @@ const Task: FC<TaskProps> = (props) => {
             TaskApi.update(+taskId, formValues.description)
                 .then(() => {
                         TaskApi.assignEmployee(+taskId, formValues.employeeId).then(
-                            () => fetchTask()
+                            () => { 
+                                fetchTask();
+                                fetchTotalTime();
+                            }
                         )
                 })
         }
@@ -79,6 +93,7 @@ const Task: FC<TaskProps> = (props) => {
                     </div>
                     <SelectEmployee onChange={onChange} value={formValues.employeeId} class="" teamId={task.teamId} formName="employeeId"></SelectEmployee>
                 </form>
+                <h2>Total time spent on task: {totalTimeCount} hour(s)</h2>
                 <SubtaskList taskId={task.id} storyId={task.storyId} teamId={task.teamId}></SubtaskList> 
                 </div>:
                 <div>Loading task...</div>

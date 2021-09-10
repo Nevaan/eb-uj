@@ -69,7 +69,7 @@ const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
         surname: "",
     };
 
-    const { onChange, onSubmit, formValues } = useForm<CreateEmployee>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<CreateEmployee>(
         initialState,
         createEmployeeCallback
     );
@@ -79,6 +79,7 @@ const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
             .create(formValues)
             .then(() => {
                 setAddingEmployee(false);
+                setFormValues(initialState);
                 props.success();
             });
     }

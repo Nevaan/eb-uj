@@ -79,7 +79,7 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
         teamId: -1
     };
 
-    const { onChange, onSubmit, formValues } = useForm<CreateProject>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<CreateProject>(
         initialState,
         createProjectCallback
     );
@@ -89,6 +89,7 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
             .create(formValues)
             .then(() => {
                 setAddingProject(false);
+                setFormValues(initialState);
                 props.success();
             });
     }

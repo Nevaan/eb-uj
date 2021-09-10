@@ -70,7 +70,7 @@ const AddStory: FC<AddStoryProps> = (props) => {
         description: "",
     };
 
-    const { onChange, onSubmit, formValues } = useForm<CreateStory>(
+    const { onChange, onSubmit, formValues, setFormValues } = useForm<CreateStory>(
         initialState,
         createEmployeeCallback
     );
@@ -82,6 +82,7 @@ const AddStory: FC<AddStoryProps> = (props) => {
             .then(() => {
                 setAddingStory(false);
                 props.success();
+                setFormValues(initialState);
             });
     }
 
