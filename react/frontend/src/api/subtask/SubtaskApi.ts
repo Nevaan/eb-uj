@@ -5,7 +5,7 @@ const subtaskApiUrl = `${ apiConfig.baseUrl }subtask`;
 
 export const SubtaskApi = {
 
-    create: (input: {description: string, storyId: number, assigneeId: number }): Promise<void> => {
+    create: (input: {description: string, storyId: number, assigneeId?: number, taskId: number }): Promise<void> => {
         return fetch(subtaskApiUrl, {
             method: 'POST',
             body: JSON.stringify(input),

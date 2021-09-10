@@ -62,7 +62,6 @@ const Task: FC<TaskProps> = (props) => {
 
     return (
         <div>
-            Task {props.match.params.taskId}!
             {task? <div>
                 <form autoComplete="off" onSubmit={onSubmit}>
                     <div>
@@ -81,7 +80,7 @@ const Task: FC<TaskProps> = (props) => {
                     </div>
                     <SelectEmployee onChange={onChange} value={formValues.employeeId} class="" teamId={task.teamId} formName="employeeId"></SelectEmployee>
                 </form>
-                <SubtaskList></SubtaskList> 
+                <SubtaskList taskId={task.id} storyId={task.storyId} teamId={task.teamId}></SubtaskList> 
                 </div>:
                 <div>Loading task...</div>
                 }

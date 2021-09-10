@@ -1,8 +1,8 @@
-import { FC, useState, CSSProperties } from "react";
+import { FC, CSSProperties, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
+import { AddSubtaskModel } from "../../api/subtask/model/AddSubtaskModel";
 import { useForm } from "../../util/form/form";
-import {AddTask as AddTaskModel} from "../../api/task/model/AddTask";
-import { TaskApi } from "../../api/task/TaskApi";
+import { SubtaskApi } from "../../api/subtask/SubtaskApi";
 import { Button } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
@@ -10,7 +10,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import SelectEmployee from '../employee/SelectEmployee';
 
-type AddTaskProps = {
+type AddSubtaskProps = {
+    taskId: number;
     storyId: number;
     teamId: number;
     success: () => void;
@@ -62,26 +63,24 @@ const useStyles = makeStyles({
 });
 
 
-
-const AddTask: FC<AddTaskProps> = (props) => {
+const AddSubtask: FC<AddSubtaskProps> = (props) => {
     const classes = useStyles();
-    const [addingTask, setAddingTask] = useState<boolean>(false);
-    
+    const [addingSubtask, setAddingSubtask] = useState<boolean>(false);
 
     const initialState = {
         description: ""
     };
 
-    const { onChange, onSubmit, formValues } = useForm<AddTaskModel>(
-        createTaskCallback,
+    const { onChange, onSubmit, formValues } = useForm<AddSubtaskModel>(
+        createSubtaskCallback,
         initialState
     );
 
-    async function createTaskCallback() {
-        TaskApi
-            .create({ ...formValues, storyId: props.storyId } )
+    async function createSubtaskCallback() {
+        SubtaskApi
+            .create({ ...formValues, storyId: props.storyId, taskId: props.taskId } )
             .then(() => {
-                setAddingTask(false);
+                setAddingSubtask(false);
                 props.success();
             });
     };
@@ -89,7 +88,7 @@ const AddTask: FC<AddTaskProps> = (props) => {
     return (
         <div className={classes.wrapper}>
             <Modal
-                open={addingTask}
+                open={addingSubtask}
             >
                 <div className={classes.container}>
                     <div className={classes.paper}>
@@ -111,7 +110,7 @@ const AddTask: FC<AddTaskProps> = (props) => {
 
                             <div className={classes.buttons}>
                                 <Button variant="contained" color="secondary" className={classes.button}
-                                    onClick={() => setAddingTask(false)}
+                                    onClick={() => setAddingSubtask(false)}
                                 >
                                     Cancel
                                 </Button>
@@ -123,11 +122,11 @@ const AddTask: FC<AddTaskProps> = (props) => {
                     </div>
                 </div>
             </Modal>
-            <Fab color="primary" aria-label="add" style={styles.add} onClick={() => setAddingTask(true)}>
+            <Fab color="primary" aria-label="add" style={styles.add} onClick={() => setAddingSubtask(true)}>
                 <AddIcon />
             </Fab>
         </div>
     )
 }
 
-export default AddTask;
+export default AddSubtask;

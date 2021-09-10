@@ -1,12 +1,18 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Column} from "../table/column";
 import {useHistory} from "react-router-dom";
 import {SubtaskModel} from "../../api/subtask/model/SubtaskModel";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";
+import { SubtaskApi } from "../../api/subtask/SubtaskApi";
+import AddSubtask from './AddSubtask';
 
-type SubtaskListProps = {}
+type SubtaskListProps = {
+    taskId: number;
+    storyId: number;
+    teamId: number;
+}
 
 const columns: Column<'id' | 'description'>[] = [
     {id: 'id', label: 'Id', minWidth: 170},
@@ -18,12 +24,22 @@ const columns: Column<'id' | 'description'>[] = [
     }
 ];
 
-const SubtaskList: FC<SubtaskListProps> = () => {
+const SubtaskList: FC<SubtaskListProps> = (props) => {
 
     const history = useHistory();
 
-    //TODO: real data
     const [subtasks, setSubtasks] = useState<SubtaskModel[]>([]);
+
+    useEffect(() => {
+        fetchSubtasks();
+    }, []);
+
+    const fetchSubtasks = (): void => {
+        if(props.taskId) {
+            SubtaskApi.getList(props.taskId)
+            .then(subs => setSubtasks(subs))
+        }
+    }
 
     return (
         <div>
@@ -45,6 +61,7 @@ const SubtaskList: FC<SubtaskListProps> = () => {
                 );
             })}
         </AppTableWrapper>
+        <AddSubtask storyId={props.storyId} teamId={props.teamId} taskId={props.taskId} success={fetchSubtasks}></AddSubtask>
         </div>
     )
 }
