@@ -55,9 +55,9 @@ export const EmployeeApi = {
         }).then(res => res.json())
     },
 
-    remove: (id: number): Promise<void> => {
+    remove: (id: number): Promise<Response> => {
         return fetch(`${ employeeApiUrl }/${id}`, {
             method: 'DELETE'
-        }).then(res => {})
+        })
     }
 }

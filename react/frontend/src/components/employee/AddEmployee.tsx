@@ -70,8 +70,8 @@ const AddEmployee: FC<AddEmployeeProps> = (props: AddEmployeeProps) => {
     };
 
     const { onChange, onSubmit, formValues } = useForm<CreateEmployee>(
-        createEmployeeCallback,
-        initialState
+        initialState,
+        createEmployeeCallback
     );
 
     async function createEmployeeCallback() {

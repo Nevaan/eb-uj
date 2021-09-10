@@ -72,8 +72,8 @@ const AddSubtask: FC<AddSubtaskProps> = (props) => {
     };
 
     const { onChange, onSubmit, formValues } = useForm<AddSubtaskModel>(
-        createSubtaskCallback,
-        initialState
+        initialState,
+        createSubtaskCallback
     );
 
     async function createSubtaskCallback() {
@@ -83,7 +83,7 @@ const AddSubtask: FC<AddSubtaskProps> = (props) => {
                 setAddingSubtask(false);
                 props.success();
             });
-    };
+    }
 
     return (
         <div className={classes.wrapper}>

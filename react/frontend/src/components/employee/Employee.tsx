@@ -1,11 +1,10 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import { FC, useEffect, useState } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { EmployeeApi } from "../../api/employee/EmployeeApi";
 import { EmployeeModel } from "../../api/employee/model/EmployeeModel";
 import { useForm } from "../../util/form/form";
 import TextField from '@material-ui/core/TextField';
-import { Button } from "@material-ui/core";
 
 interface EmployeeRouteParams {
     employeeId: string;
@@ -44,7 +43,6 @@ const useStyles = makeStyles({
 const Employee: FC<EmployeeProps> = (props: EmployeeProps) => {
     const classes = useStyles();
     const employeeId = Number(props.match.params.employeeId);
-    const history = useHistory();
     const [employee, setEmployee] = useState<EmployeeModel>();
 
     useEffect(() => {
@@ -53,20 +51,20 @@ const Employee: FC<EmployeeProps> = (props: EmployeeProps) => {
 
     const fetchEmployeeById = (): void => {
         EmployeeApi.get(employeeId)
-            .then(employee => {
-                setEmployee((employee));
-                const { name, surname } = employee;
+            .then(employeeResponse => {
+                setEmployee((employeeResponse));
+                const { name, surname } = employeeResponse;
                 setFormValues({ name, surname })
             })
             .catch((err: Error) => console.log(err))
     }
 
     const { onChange, onSubmit, formValues, setFormValues } = useForm<Omit<EmployeeModel, 'id'>>(
-        updateEmployeeCallback,
         {
             name: "",
             surname: ""
-        }
+        },
+        updateEmployeeCallback
     );
 
     async function updateEmployeeCallback() {

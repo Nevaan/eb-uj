@@ -36,7 +36,7 @@ const TaskList: FC<TaskListProps> = (props) => {
     const fetchTasks = (): void => {
         if (props.storyId) {
             TaskApi.getListForStory(props.storyId)
-                .then(tasks => setTasks((tasks)))
+                .then(tasksResponse => setTasks((tasksResponse)))
                 .catch((err: Error) => console.log(err))
         }
     }

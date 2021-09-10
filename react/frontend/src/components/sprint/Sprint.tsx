@@ -46,6 +46,13 @@ const Sprint: FC<SprintProps> = (props) => {
         }
     }
 
+    const updateStageIfExists = stage ? 
+    <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: { description: string }) => {
+        if (props.projectId) {
+            SprintApi.update({ id: props.projectId, description: model.description })
+        }
+    }}></UpdateProjectStage> : <div></div>;
+
     return (
         <div>
             {
@@ -55,12 +62,7 @@ const Sprint: FC<SprintProps> = (props) => {
                             Complete sprint
                         </Button>
                         {
-                            stage ? 
-                            <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: { description: string }) => {
-                                if (props.projectId) {
-                                    SprintApi.update({ id: props.projectId, description: model.description })
-                                }
-                            }}></UpdateProjectStage> : <div></div>
+                            updateStageIfExists
                         }
                         <StoryList stories={sprint}></StoryList>
                     </div>

@@ -35,10 +35,10 @@ const Subtask: FC<SubtaskProps> = (props) => {
     }
 
     const { onChange, onSubmit, formValues, setFormValues } = useForm<{ description: string, employeeId?: number }>(
-        updateSubtaskCallback,
         {
             description: ""
-        }
+        },
+        updateSubtaskCallback
     );
 
     async function updateSubtaskCallback() {

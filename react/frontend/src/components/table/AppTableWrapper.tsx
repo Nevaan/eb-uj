@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     }
 });
 
-type AppTableWrapperProps<T extends String> = PropsWithChildren<{
+type AppTableWrapperProps<T extends string> = PropsWithChildren<{
     columns: Column<T>[];
 }>;
 

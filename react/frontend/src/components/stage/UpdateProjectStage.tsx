@@ -14,11 +14,11 @@ const UpdateProjectStage: FC<UpdateProjectStageProps> = (props) => {
         props.updateProjectStageCallback(formValues)
     }
     
-    const { onChange, onSubmit, formValues, setFormValues } = useForm<{description: string}>(
-        callback,
+    const { onChange, onSubmit, formValues } = useForm<{description: string}>(
         {
             description: (props.description ? props.description : "")
-        }
+        },
+        callback
     );
 
     const formChanged = (): boolean => {

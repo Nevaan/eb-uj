@@ -57,9 +57,9 @@ export const TeamApi = {
         }).then(res => res.json())
     },
 
-    remove: (id: number): Promise<void> => {
+    remove: (id: number): Promise<Response> => {
         return fetch(`${ teamApiUrl }/${id}`, {
             method: 'DELETE'
-        }).then(res => {})
+        })
     }
 }

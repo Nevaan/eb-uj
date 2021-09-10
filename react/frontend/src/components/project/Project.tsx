@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -14,7 +14,6 @@ import { ProjectModel } from "../../api/project/model/ProjectModel";
 import { useForm } from "../../util/form/form";
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
-import { useHistory } from 'react-router-dom';
 
 interface ProjectRouteParams {
     projectId: string;
@@ -65,9 +64,9 @@ const Project: FC<ProjectProps> = (props) => {
 
     const fetchProjectById = (): void => {
         ProjectApi.get(+props.match.params.projectId)
-            .then(project => {
-                setProject((project));
-                const { name, description } = project
+            .then(projectResponse => {
+                setProject((projectResponse));
+                const { name, description } = projectResponse
                 setFormValues({ name, description })
                 setTabIdx(0)
             })
@@ -79,11 +78,11 @@ const Project: FC<ProjectProps> = (props) => {
     };
 
     const { onChange, onSubmit, formValues, setFormValues } = useForm<Omit<ProjectModel, 'id' | 'teamId'>>(
-        updateProjectCallback,
         {
             name: "",
             description: ""
-        }
+        },
+        updateProjectCallback
     );
 
     async function updateProjectCallback() {

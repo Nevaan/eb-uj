@@ -39,7 +39,7 @@ export const TaskApi = {
         .then(res => res.json())
     },
 
-    update: (id: number, description: string): Promise<void> => {
+    update: (id: number, description: string): Promise<Response> => {
         return fetch(`${taskApiUrl}/${id}`, {
             method: 'PUT',
             body: JSON.stringify({description}),
@@ -47,10 +47,10 @@ export const TaskApi = {
                 'Content-Type': 'application/json', 
                 credentials: "include"
             }
-        }).then(_ => {})
+        })
     },
 
-    assignEmployee: (id: number, employeeId?: number): Promise<void> => {
+    assignEmployee: (id: number, employeeId?: number): Promise<Response> => {
         if (employeeId) {
             return fetch(`${taskApiUrl}/${id}/employee/${employeeId}`, {
                 method: 'PUT',
@@ -58,7 +58,7 @@ export const TaskApi = {
                     'Content-Type': 'application/json', 
                     credentials: "include"
                 }
-            }).then(_ => {})
+            })
         } else {
             return fetch(`${taskApiUrl}/${id}/employee`, {
                 method: 'DELETE',
@@ -66,7 +66,7 @@ export const TaskApi = {
                     'Content-Type': 'application/json', 
                     credentials: "include"
                 }
-            }).then(_ => {})
+            })
         }
         
     }

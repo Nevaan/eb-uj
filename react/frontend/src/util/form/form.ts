@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useForm = <T>(callback: any, initialState: T) => {
+export const useForm = <T>(initialState: T, callback?: any) => {
     const [formValues, setFormValues] = useState(initialState);
     
     const onChange = (event: React.ChangeEvent<any>) => {
@@ -10,7 +10,9 @@ export const useForm = <T>(callback: any, initialState: T) => {
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await callback();
+        if(callback){
+            await callback();
+        }
     };
     
     return {

@@ -54,20 +54,20 @@ const Team: FC<TeamProps> = (props) => {
 
     const fetchTeamById = (): void => {
         TeamApi.get(teamId)
-            .then(team => {
-                setTeam((team));
-                const { name, description } = team;
+            .then(teamResponse => {
+                setTeam((teamResponse));
+                const { name, description } = teamResponse;
                 setFormValues({ name, description })
             })
             .catch((err: Error) => console.log(err))
     }
 
     const { onChange, onSubmit, formValues, setFormValues } = useForm<Omit<TeamModel, 'id'>>(
-        updateTeamCallback,
         {
             name: "",
             description: ""
-        }
+        },
+        updateTeamCallback
     );
 
     async function updateTeamCallback() {

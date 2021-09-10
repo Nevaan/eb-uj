@@ -15,14 +15,14 @@ export const initialState: AuthState = {
 }
 
 
-export const AuthReducer = (initialState: AuthState, action: AuthActions): AuthState => {
+export const AuthReducer = (initState: AuthState, action: AuthActions): AuthState => {
     switch (action.type) {
         case 'login':
-            return { ...initialState, loggedIn: true, profile: action.profile };
+            return { ...initState, loggedIn: true, profile: action.profile };
         case 'logout':
-            return { ...initialState, loggedIn: false, profile: undefined };
+            return { ...initState, loggedIn: false, profile: undefined };
         case 'unauthorized':
-            return { ...initialState, loggedIn: false, profile: undefined };
+            return { ...initState, loggedIn: false, profile: undefined };
         default:
             throw new Error(`Unknown auth action ${action}`);
     }

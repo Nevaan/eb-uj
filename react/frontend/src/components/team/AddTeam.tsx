@@ -2,7 +2,6 @@ import { CSSProperties, FC, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
-import React from "react";
 import { useForm } from "../../util/form/form";
 import Modal from '@material-ui/core/Modal';
 
@@ -70,8 +69,8 @@ const AddTeam: FC<AddTeamProps> = (props: AddTeamProps) => {
     };
 
     const { onChange, onSubmit, formValues } = useForm<CreateTeam>(
-        createTeamCallback,
-        initialState
+        initialState,
+        createTeamCallback
     );
 
     async function createTeamCallback() {

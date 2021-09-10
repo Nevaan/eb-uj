@@ -18,8 +18,8 @@ const SelectEmployee: FC<SelectEmployeeProps> = (props) => {
     const [employees, setEmployees] = useState<EmployeeModel[]>([]);
 
     const fetchEmployees = (): void => {
-        TeamApi.getEmployees(props.teamId).then(employees => {
-            setEmployees(employees);
+        TeamApi.getEmployees(props.teamId).then(employeesResponse => {
+            setEmployees(employeesResponse);
         })
     };
 

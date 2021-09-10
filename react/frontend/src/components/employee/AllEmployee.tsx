@@ -1,6 +1,5 @@
 import { CSSProperties, FC, useEffect, useState } from "react";
 
-import { useHistory } from 'react-router-dom';
 import { EmployeeApi } from "../../api/employee/EmployeeApi";
 import { EmployeeModel } from "../../api/employee/model/EmployeeModel";
 import EmployeeList from './EmployeeList';
@@ -20,8 +19,6 @@ const styles = {
 
 const AllEmployee: FC<AllEmployeeProps> = () => {
 
-    const history = useHistory();
-
     const [employees, setEmployees] = useState<EmployeeModel[]>([]);
 
     useEffect(() => {
@@ -30,7 +27,7 @@ const AllEmployee: FC<AllEmployeeProps> = () => {
 
     const fetchEmployees = (): void => {
         EmployeeApi.list()
-            .then(employees => setEmployees((employees)))
+            .then(employeesResponse => setEmployees((employeesResponse)))
             .catch((err: Error) => console.log(err))
     }
 

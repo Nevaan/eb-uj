@@ -9,7 +9,6 @@ import Task from "../components/task/Task"
 import Team from "../components/team/Team"
 import TeamList from "../components/team/TeamList"
 import Employee from "../components/employee/Employee"
-import EmployeeList from "../components/employee/EmployeeList"
 import AllEmployee from "../components/employee/AllEmployee"
 
 type Route = {

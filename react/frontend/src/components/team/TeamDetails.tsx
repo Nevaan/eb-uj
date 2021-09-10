@@ -22,8 +22,8 @@ const TeamDetails: FC<TeamDetailsProps> = (props: TeamDetailsProps) => {
 
     const fetchTeamEmployees = (): void => {
         TeamApi.getEmployees(props.teamId)
-            .then(employees => {
-                setEmployees(employees);
+            .then(employeesResponse => {
+                setEmployees(employeesResponse);
             })
             .catch((err: Error) => console.log(err))
     }

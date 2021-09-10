@@ -73,8 +73,8 @@ const AddTask: FC<AddTaskProps> = (props) => {
     };
 
     const { onChange, onSubmit, formValues } = useForm<AddTaskModel>(
-        createTaskCallback,
-        initialState
+        initialState,
+        createTaskCallback
     );
 
     async function createTaskCallback() {
@@ -84,7 +84,7 @@ const AddTask: FC<AddTaskProps> = (props) => {
                 setAddingTask(false);
                 props.success();
             });
-    };
+    }
 
     return (
         <div className={classes.wrapper}>

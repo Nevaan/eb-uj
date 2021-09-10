@@ -71,8 +71,8 @@ const AddStory: FC<AddStoryProps> = (props) => {
     };
 
     const { onChange, onSubmit, formValues } = useForm<CreateStory>(
-        createEmployeeCallback,
-        initialState
+        initialState,
+        createEmployeeCallback
     );
 
     async function createEmployeeCallback() {

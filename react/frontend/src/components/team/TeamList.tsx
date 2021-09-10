@@ -48,7 +48,7 @@ const TeamList: FC<TeamListProps> = () => {
 
     const fetchTeams = (): void => {
         TeamApi.list()
-            .then(teams => setTeams((teams)))
+            .then(teamsResponse => setTeams((teamsResponse)))
             .catch((err: Error) => console.log(err))
     }
 

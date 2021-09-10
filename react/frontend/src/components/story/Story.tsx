@@ -27,21 +27,21 @@ const Story: FC<StoryProps> = (props) => {
         const storyId = props.match.params.storyId;
         if (storyId) {
             StoryApi.get(+storyId)
-                .then(story => {
-                    const { name, description, assigneeId } = story;
+                .then(storyResponse => {
+                    const { name, description, assigneeId } = storyResponse;
                     setFormValues({name, description, assigneeId});
-                    setStory(story);
+                    setStory(storyResponse);
                 })
                 .catch((err: Error) => console.log(err))
         }
     }
 
     const { onChange, onSubmit, formValues, setFormValues } = useForm<{name: string, description: string, assigneeId?: number}>(
-        updateStoryCallback,
         {
             name: "",
             description: ""
-        }
+        },
+        updateStoryCallback
     );
 
     async function updateStoryCallback() {

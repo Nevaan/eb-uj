@@ -37,10 +37,10 @@ const Task: FC<TaskProps> = (props) => {
     }
 
     const { onChange, onSubmit, formValues, setFormValues } = useForm<{ description: string, employeeId?: number }>(
-        updateTaskCallback,
         {
             description: ""
-        }
+        },
+        updateTaskCallback
     );
 
     async function updateTaskCallback() {

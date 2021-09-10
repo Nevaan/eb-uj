@@ -80,8 +80,8 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
     };
 
     const { onChange, onSubmit, formValues } = useForm<CreateProject>(
-        createProjectCallback,
-        initialState
+        initialState,
+        createProjectCallback
     );
 
     async function createProjectCallback() {
@@ -91,13 +91,13 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
                 setAddingProject(false);
                 props.success();
             });
-    };
+    }
 
     const fetchTeams = (): void => {
         TeamApi.list()
-            .then(teams => setTeams((teams)))
+            .then(teamsResponse => setTeams((teamsResponse)))
             .catch((err: Error) => console.log(err))
-    };
+    }
 
     return (
         <div className={classes.wrapper}>

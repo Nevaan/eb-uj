@@ -1,7 +1,6 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import { FC } from "react";
 import { useForm } from "../../util/form/form";
-import { Button } from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { EmployeeModel } from "../../api/employee/model/EmployeeModel";
@@ -42,8 +41,7 @@ const useStyles = makeStyles({
 const AddEmployeeToTeam: FC<AddEmployeeToTeamProps> = (props: AddEmployeeToTeamProps) => {
     const classes = useStyles();
 
-    const { onChange, onSubmit, formValues, setFormValues } = useForm<{ userId: string }>(
-        () => {},
+    const { onChange, onSubmit, formValues } = useForm<{ userId: string }>(
         {
             userId: ""
         }

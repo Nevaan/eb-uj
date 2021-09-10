@@ -43,10 +43,10 @@ export const ProjectApi = {
         }).then(res => res.json())
     },
 
-    remove: (id: number): Promise<void> => {
+    remove: (id: number): Promise<Response> => {
         return fetch(`${ projectApiUrl }/${id}`, {
             method: 'DELETE'
-        }).then(res => {})
+        })
     }
 
 }
