@@ -1,9 +1,12 @@
 import React, { useReducer, FC, Dispatch } from 'react';
 import { initialState, AuthReducer, AuthActions } from './reducer';
-
+interface IContextProps {
+	(x: AuthActions) : void;
+}
 
 export const AuthStateContext = React.createContext({ loggedIn: false });
-const AuthDispatchContext = React.createContext<Dispatch<AuthActions>>((x: AuthActions) => {});
+const AuthDispatchContext = React.createContext<Dispatch<AuthActions>>({} as IContextProps);
+
 
 export function useAuthState() {
 	const context = React.useContext(AuthStateContext);

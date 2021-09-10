@@ -1,9 +1,6 @@
 import {FC, useState, CSSProperties} from "react";
 
-import { Drawer as MaterialDrawer, Divider, IconButton }
-    from '@material-ui/core';
-import { List, ListItem, ListItemText }
-    from '@material-ui/core';
+import { Drawer as MaterialDrawer, Divider, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ReorderIcon from '@material-ui/icons/Reorder';
 

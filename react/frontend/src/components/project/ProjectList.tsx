@@ -81,7 +81,7 @@ const ProjectList: FC<ProjectListProps> = () => {
 
     const fetchProjects = (): void => {
         ProjectApi.list()
-            .then(projects => setProjects((projects)))
+            .then(projectsRepository => setProjects((projectsRepository)))
             .catch((err: Error) => console.log(err))
     }
 
