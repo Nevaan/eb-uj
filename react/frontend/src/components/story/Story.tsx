@@ -28,9 +28,9 @@ const Story: FC<StoryProps> = (props) => {
         if (storyId) {
             StoryApi.get(+storyId)
                 .then(story => {
-                    setStory(story);
                     const { name, description, assigneeId } = story;
                     setFormValues({name, description, assigneeId});
+                    setStory(story);
                 })
                 .catch((err: Error) => console.log(err))
         }
