@@ -41,7 +41,7 @@ export const TaskApi = {
 
     update: (id: number, description: string): Promise<void> => {
         return fetch(`${taskApiUrl}/${id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             body: JSON.stringify({description}),
             headers: { 
                 'Content-Type': 'application/json', 
@@ -53,7 +53,7 @@ export const TaskApi = {
     assignEmployee: (id: number, employeeId?: number): Promise<void> => {
         if (employeeId) {
             return fetch(`${taskApiUrl}/${id}/employee/${employeeId}`, {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json', 
                     credentials: "include"

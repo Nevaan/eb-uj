@@ -1,7 +1,7 @@
 package controllers
 
 import com.mohiva.play.silhouette.api.Silhouette
-import model.dto.AddSubtask
+import model.dto.{AddSubtask, GetSubtask, GetTask, UpdateSubtask}
 import model.task.TaskRepository
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
@@ -10,7 +10,6 @@ import security.environment.CookieEnv
 import scala.concurrent.ExecutionContext.Implicits.global
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
-import model.dto.UpdateSubtask
 import model.projectstage.ProjectStageRepository
 import model.story.StoryRepository
 
@@ -41,10 +40,35 @@ class SubtaskController @Inject()(silhouette: Silhouette[CookieEnv], val control
   }
 
   def get(id: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
-    taskRepository.getTaskById(id) map { task =>
+    taskRepository.getSubtaskById(id) flatMap { task =>
       task match {
-        case Some(t) => Ok(Json.toJson(t))
-        case None => NotFound
+        case Some(t) => {
+
+          storyRepository.get(t.storyId).flatMap(maybeStory => {
+            maybeStory match {
+              case Some(story) => {
+                projectStageRepository.getProjectForStage(story.stageId)
+                  .map(maybeProject => {
+                    maybeProject match {
+                      case Some(project) => {
+
+                        Ok(Json.toJson(GetSubtask(t.id, t.description, t.storyId, t.parentId,
+                          t.employeeId, project.teamId)))
+
+                      }
+                      case None => NotFound
+                    }
+                  })
+              }
+              case None => Future {
+                NotFound
+              }
+            }
+          })
+        }
+        case None => Future {
+          NotFound
+        }
       }
     }
   }

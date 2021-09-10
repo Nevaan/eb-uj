@@ -2,9 +2,10 @@ package filter
 
 import javax.inject.Inject
 import akka.util.ByteString
-import play.api.Logging
+import play.api.{Logger, Logging}
 import play.api.libs.streams.Accumulator
 import play.api.mvc._
+
 import scala.concurrent.ExecutionContext
 
 class LoggingFilter @Inject() (implicit ec: ExecutionContext) extends EssentialFilter with Logging {

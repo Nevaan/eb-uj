@@ -1,4 +1,5 @@
 import { apiConfig } from '../ApiConfig';
+import { GetSubtaskModel } from './model/GetSubtaskModel';
 import { SubtaskModel } from './model/SubtaskModel';
 
 const subtaskApiUrl = `${ apiConfig.baseUrl }subtask`;
@@ -16,7 +17,7 @@ export const SubtaskApi = {
         }).then(res => res.json())
     },
 
-    get: (id: number): Promise<SubtaskModel> => {
+    get: (id: number): Promise<GetSubtaskModel> => {
         return fetch(`${subtaskApiUrl}/${id}`, { 
             method: 'GET', 
             headers: { 
@@ -40,7 +41,7 @@ export const SubtaskApi = {
 
     update: (id: number, description: string): Promise<void> => {
         return fetch(`${subtaskApiUrl}/${id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             body: JSON.stringify({description}),
             headers: { 
                 'Content-Type': 'application/json', 
@@ -52,7 +53,7 @@ export const SubtaskApi = {
     assignEmployee: (id: number, employeeId?: number): Promise<void> => {
         if(employeeId) {
             return fetch(`${subtaskApiUrl}/${id}/employee/${employeeId}`, {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json', 
                     credentials: "include"

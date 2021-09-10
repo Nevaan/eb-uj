@@ -46,8 +46,8 @@ DELETE        /subtask                                 controllers.SubtaskContro
 GET           /task/:id                                controllers.TaskController.get(id: Long)
 GET           /task/all/:storyId                       controllers.TaskController.getTasksForStory(storyId: Long)
 POST          /task                                    controllers.TaskController.create
-PATCH         /task/:id                                controllers.TaskController.update(id: Long)
-PATCH         /task/:id/employee/:employeeId           controllers.TaskController.assignEmployee(id: Long, employeeId: Long)
+PUT           /task/:id                                controllers.TaskController.update(id: Long)
+PUT           /task/:id/employee/:employeeId           controllers.TaskController.assignEmployee(id: Long, employeeId: Long)
 DELETE        /task/:id/employee                       controllers.TaskController.deleteAssignment(id: Long)
 DELETE        /task                                    controllers.TaskController.delete
 

@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { TaskModel } from "../../api/task/model/TaskModel";
 import { TaskApi } from "../../api/task/TaskApi";
 import { useForm } from "../../util/form/form";
 import SubtaskList from "../subtask/SubtaskList";
