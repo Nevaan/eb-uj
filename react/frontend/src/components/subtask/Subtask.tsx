@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import SelectEmployee from '../employee/SelectEmployee';
 import TimeEntryList from '../timeentry/TimeEntryList';
-
+import CommentList from '../comment/CommentList'
 interface SubtaskRouteParams {
     subtaskId: string;
 }
@@ -79,6 +79,7 @@ const Subtask: FC<SubtaskProps> = (props) => {
                     </div>
                     <SelectEmployee onChange={onChange} value={formValues.employeeId} class="" teamId={subtask.teamId} formName="employeeId"></SelectEmployee>
                     <TimeEntryList subtaskId={subtask.id} teamId={subtask.teamId}></TimeEntryList>
+                    <CommentList taskId={subtask.id}></CommentList>
                 </form>
                 </div>:
                 <div>Loading subtask...</div>

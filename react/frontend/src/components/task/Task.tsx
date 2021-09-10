@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import { GetTaskModel } from "../../api/task/model/GetTaskModel";
 import { TimeEntryApi } from "../../api/timeentry/TimeEntryApi";
+import CommentList from "../comment/CommentList";
 interface TaskRouteParams {
     taskId: string;
 }
@@ -95,6 +96,7 @@ const Task: FC<TaskProps> = (props) => {
                 </form>
                 <h2>Total time spent on task: {totalTimeCount} hour(s)</h2>
                 <SubtaskList taskId={task.id} storyId={task.storyId} teamId={task.teamId}></SubtaskList> 
+                <CommentList taskId={task.id}></CommentList>
                 </div>:
                 <div>Loading task...</div>
                 }

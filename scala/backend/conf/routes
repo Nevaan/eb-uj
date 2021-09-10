@@ -8,7 +8,7 @@ POST          /backlog                                 controllers.BacklogContro
 PUT           /backlog/:projectId                      controllers.BacklogController.update(projectId: Long)
 DELETE        /backlog                                 controllers.BacklogController.delete
 
-GET           /comment                                 controllers.CommentController.get
+GET           /comment/:taskId                         controllers.CommentController.getForTaskId(taskId: Long)
 POST          /comment                                 controllers.CommentController.create
 PUT           /comment                                 controllers.CommentController.update
 DELETE        /comment                                 controllers.CommentController.delete
@@ -65,10 +65,5 @@ GET           /timeentry/story/:storyId                controllers.TimeEntryCont
 POST          /timeentry                               controllers.TimeEntryController.create
 PUT           /timeentry                               controllers.TimeEntryController.update
 DELETE        /timeentry                               controllers.TimeEntryController.delete
-
-GET           /user                                    controllers.UserController.get()
-POST          /user                                    controllers.UserController.create()
-PUT           /user                                    controllers.UserController.update()
-DELETE        /user                                    controllers.UserController.delete()
 
 GET           /profile                                 controllers.AuthController.profile()
