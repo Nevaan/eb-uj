@@ -108,8 +108,4 @@ class TaskController @Inject()(silhouette: Silhouette[CookieEnv], val controller
     })
   }
 
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete task")
-  }
-
 }

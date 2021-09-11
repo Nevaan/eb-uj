@@ -15,10 +15,6 @@ import scala.concurrent.Future
 class BacklogController @Inject()(silhouette: Silhouette[CookieEnv], val controllerComponents: ControllerComponents,
                                   projectStageRepository: ProjectStageRepository) extends BaseController {
 
-  def create = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("create backlog")
-  }
-
   def get(projectId: Long) = silhouette.SecuredAction.async { implicit request: Request[AnyContent] =>
     projectStageRepository.getBacklogByProjectId(projectId)
       .map(res => {
@@ -53,10 +49,6 @@ class BacklogController @Inject()(silhouette: Silhouette[CookieEnv], val control
       }
       case None => Future { BadRequest }
     }
-  }
-
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete backlog")
   }
 
 }

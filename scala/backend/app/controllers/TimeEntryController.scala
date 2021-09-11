@@ -78,11 +78,4 @@ class TimeEntryController @Inject()(silhouette: Silhouette[CookieEnv], val contr
     })
   }
 
-  def update = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("update time entry")
-  }
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete time entry")
-  }
-
 }

@@ -112,8 +112,4 @@ class SubtaskController @Inject()(silhouette: Silhouette[CookieEnv], val control
     })
   }
 
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete subtask")
-  }
-
 }

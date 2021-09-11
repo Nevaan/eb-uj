@@ -86,8 +86,5 @@ class StoryController @Inject()(silhouette: Silhouette[CookieEnv], val controlle
     }
 
   }
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete story")
-  }
 
 }

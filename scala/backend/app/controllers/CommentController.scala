@@ -48,11 +48,4 @@ class CommentController @Inject()(silhouette: Silhouette[CookieEnv], val control
     })
   }
 
-  def update = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("update comment")
-  }
-  def delete = silhouette.SecuredAction { implicit request: Request[AnyContent] =>
-    Ok("delete comment")
-  }
-
 }

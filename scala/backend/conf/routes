@@ -4,14 +4,10 @@ GET           /authenticate                            controllers.AuthControlle
 GET           /auth                                    controllers.AuthController.loginPage()
 
 GET           /backlog/:projectId                      controllers.BacklogController.get(projectId: Long)
-POST          /backlog                                 controllers.BacklogController.create
 PUT           /backlog/:projectId                      controllers.BacklogController.update(projectId: Long)
-DELETE        /backlog                                 controllers.BacklogController.delete
 
 GET           /comment/:taskId                         controllers.CommentController.getForTaskId(taskId: Long)
 POST          /comment                                 controllers.CommentController.create
-PUT           /comment                                 controllers.CommentController.update
-DELETE        /comment                                 controllers.CommentController.delete
 
 GET           /employee                                controllers.EmployeeController.get(notInTeam: Option[Long])
 GET           /employee/:id                            controllers.EmployeeController.getById(id: Long)
@@ -33,7 +29,6 @@ GET           /story/:id                               controllers.StoryControll
 GET           /story/stage/:stageId                    controllers.StoryController.getByStageId(stageId: Long)
 POST          /story                                   controllers.StoryController.create
 PUT           /story/:id                               controllers.StoryController.update(id: Long)
-DELETE        /story                                   controllers.StoryController.delete
 
 GET           /subtask/:id                             controllers.SubtaskController.get(id: Long)
 GET           /subtask/all/:taskId                     controllers.SubtaskController.getSubtasks(taskId: Long)
@@ -41,7 +36,6 @@ POST          /subtask                                 controllers.SubtaskContro
 PUT           /subtask/:id                             controllers.SubtaskController.update(id: Long)
 PUT           /subtask/:id/employee/:employeeId        controllers.SubtaskController.assignEmployee(id: Long, employeeId: Long)
 DELETE        /subtask/:id/employee                    controllers.SubtaskController.deleteAssignment(id: Long)
-DELETE        /subtask                                 controllers.SubtaskController.delete
 
 GET           /task/:id                                controllers.TaskController.get(id: Long)
 GET           /task/all/:storyId                       controllers.TaskController.getTasksForStory(storyId: Long)
@@ -49,7 +43,6 @@ POST          /task                                    controllers.TaskControlle
 PUT           /task/:id                                controllers.TaskController.update(id: Long)
 PUT           /task/:id/employee/:employeeId           controllers.TaskController.assignEmployee(id: Long, employeeId: Long)
 DELETE        /task/:id/employee                       controllers.TaskController.deleteAssignment(id: Long)
-DELETE        /task                                    controllers.TaskController.delete
 
 GET           /team                                    controllers.TeamController.get
 GET           /team/:id                                controllers.TeamController.getById(id: Long)
@@ -63,7 +56,5 @@ GET           /timeentry/subtask/:subtaskId            controllers.TimeEntryCont
 GET           /timeentry/task/:taskId                  controllers.TimeEntryController.getTimeEntriesCountForTask(taskId: Long)
 GET           /timeentry/story/:storyId                controllers.TimeEntryController.getTimeEntriesCountForStory(storyId: Long)
 POST          /timeentry                               controllers.TimeEntryController.create
-PUT           /timeentry                               controllers.TimeEntryController.update
-DELETE        /timeentry                               controllers.TimeEntryController.delete
 
 GET           /profile                                 controllers.AuthController.profile()
