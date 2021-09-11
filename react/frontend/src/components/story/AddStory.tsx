@@ -18,7 +18,9 @@ type AddStoryProps = {
 const styles = {
     add: {
         marginTop: '15px',
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
+        marginBottom: '15px',
+        marginRight: '15px'
     } as CSSProperties
 };
 

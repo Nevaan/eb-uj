@@ -59,6 +59,9 @@ const useStyles = makeStyles({
         marginLeft: '15px',
         marginRight: '15px',
         marginBottom: '15px'
+    },
+    selectEmployee: {
+        width: '100%'
     }
 });
 
@@ -106,7 +109,9 @@ const AddSubtask: FC<AddSubtaskProps> = (props) => {
                                 name="description"
                             />
 
-                            <SelectEmployee onChange={onChange} value={formValues.assigneeId} class={classes.formElement} teamId={props.teamId} formName="assigneeId" ></SelectEmployee>
+                            <div className={classes.formElement}>
+                                <SelectEmployee onChange={onChange} value={formValues.assigneeId} class={classes.selectEmployee} teamId={props.teamId} formName="assigneeId" ></SelectEmployee>
+                            </div>
 
                             <div className={classes.buttons}>
                                 <Button variant="contained" color="secondary" className={classes.button}

@@ -5,7 +5,7 @@ import { GetTaskModel } from "../../api/task/model/GetTaskModel";
 import { useForm } from "../../util/form/form";
 
 import TextField from '@material-ui/core/TextField';
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import SelectEmployee from '../employee/SelectEmployee';
 import TimeEntryList from '../timeentry/TimeEntryList';
 import CommentList from '../comment/CommentList'
@@ -16,8 +16,36 @@ interface SubtaskRouteParams {
 interface SubtaskProps extends RouteComponentProps<SubtaskRouteParams> {
 }
 
-const Subtask: FC<SubtaskProps> = (props) => {
+const useStyles = makeStyles({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    containerElement: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '80%',
+        marginBottom: '15px'
+    },
+    formRow: {
+        marginTop: '10px',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    leftColumn: {
+        width: '50%'
+    },
+    selectEmployee: {
+        width: '100%'
+    }
+});
 
+const Subtask: FC<SubtaskProps> = (props) => {
+    const classes = useStyles();
     const [subtask, setSubtask] = useState<GetTaskModel>();
 
     useEffect(() => {
@@ -60,11 +88,12 @@ const Subtask: FC<SubtaskProps> = (props) => {
     }
 
     return (
-        <div>
-            {subtask? <div>
+        <div className={classes.container}>
+            {subtask? <div className={classes.containerElement}>
                 <form autoComplete="off" onSubmit={onSubmit}>
-                    <div>
+                    <div className={classes.formRow}>
                         <TextField
+                            className={classes.leftColumn}
                             name="description"
                             label="Task description"
                             value={formValues.description}
@@ -77,7 +106,11 @@ const Subtask: FC<SubtaskProps> = (props) => {
                             Save
                                 </Button>
                     </div>
-                    <SelectEmployee onChange={onChange} value={formValues.employeeId} class="" teamId={subtask.teamId} formName="employeeId"></SelectEmployee>
+                    <div className={classes.formRow}>
+                        <div className={classes.leftColumn}>
+                            <SelectEmployee onChange={onChange} value={formValues.employeeId} class={classes.selectEmployee} teamId={subtask.teamId} formName="employeeId"></SelectEmployee>
+                        </div>
+                    </div>
                     <TimeEntryList subtaskId={subtask.id} teamId={subtask.teamId}></TimeEntryList>
                     <CommentList taskId={subtask.id}></CommentList>
                 </form>

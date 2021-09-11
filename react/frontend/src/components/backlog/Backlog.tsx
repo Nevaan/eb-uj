@@ -3,7 +3,7 @@ import { StoryModel } from "../../api/story/model/StoryModel";
 import { StoryApi } from "../../api/story/StoryApi";
 import AddStory from "../story/AddStory";
 import StoryList from "../story/StoryList";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { SprintApi } from "../../api/sprint/SprintApi";
 import UpdateProjectStage from "../stage/UpdateProjectStage";
 import { ProjectStage } from "../../api/stage/model/ProjectStage";
@@ -15,8 +15,19 @@ type BacklogProps = {
     sprintStart: () => void;
 }
 
-const Backlog: FC<BacklogProps> = (props) => {
+const useStyles = makeStyles({
+    startSprint: {
+        marginTop: '15px'
+    },
+    updateForm: {
+        marginTop: '15px',
+        marginLeft: '15px',
+        marginRight: '15px'
+    }
+});
 
+const Backlog: FC<BacklogProps> = (props) => {
+    const classes = useStyles();
     const [backlog, setBacklog] = useState<StoryModel[]>([]);
     const [stage, setStage] = useState<ProjectStage>();
 
@@ -58,16 +69,18 @@ const Backlog: FC<BacklogProps> = (props) => {
     return (
         <div>
 
-            <Button color="primary" variant="contained" onClick={startSprint} disabled={backlog.length === 0}>
+            <Button className={classes.startSprint} color="primary" variant="contained" onClick={startSprint} disabled={backlog.length === 0}>
                 Start sprint
             </Button>
             {
                 stage?
-                <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: {description: string}) => {
+                <div className={classes.updateForm}>
+                    <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: {description: string}) => {
                     if(props.projectId) {
                         BacklogApi.update({ id: props.projectId, description: model.description })
                     }
-                }}></UpdateProjectStage> : <div></div>
+                    }}></UpdateProjectStage> 
+                </div>: <div></div>
             }
 
             {

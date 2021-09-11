@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { StoryModel } from "../../api/story/model/StoryModel";
 import { StoryApi } from "../../api/story/StoryApi";
 import StoryList from "../story/StoryList";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { SprintApi } from "../../api/sprint/SprintApi";
 import UpdateProjectStage from "../stage/UpdateProjectStage";
 import { ProjectStage } from "../../api/stage/model/ProjectStage";
@@ -13,8 +13,19 @@ type SprintProps = {
     completed: () => void;
 }
 
-const Sprint: FC<SprintProps> = (props) => {
+const useStyles = makeStyles({
+    completeButton: {
+        marginTop: '15px'
+    },
+    updateForm: {
+        marginTop: '15px',
+        marginLeft: '15px',
+        marginRight: '15px'
+    }
+});
 
+const Sprint: FC<SprintProps> = (props) => {
+    const classes = useStyles();
     const [sprint, setSprint] = useState<StoryModel[]>([]);
     const [stage, setStage] = useState<ProjectStage>();
 
@@ -47,18 +58,20 @@ const Sprint: FC<SprintProps> = (props) => {
     }
 
     const updateStageIfExists = stage ? 
-    <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: { description: string }) => {
+    <div className={classes.updateForm}>
+        <UpdateProjectStage description={stage?.description} updateProjectStageCallback={(model: { description: string }) => {
         if (props.projectId) {
             SprintApi.update({ id: props.projectId, description: model.description })
         }
-    }}></UpdateProjectStage> : <div></div>;
+        }}></UpdateProjectStage>
+    </div> : <div></div>;
 
     return (
         <div>
             {
                 props.id ? (
                     <div>
-                        <Button color="primary" variant="contained" onClick={completeSprint}>
+                        <Button className={classes.completeButton} color="primary" variant="contained" onClick={completeSprint}>
                             Complete sprint
                         </Button>
                         {

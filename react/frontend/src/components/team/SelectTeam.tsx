@@ -1,22 +1,21 @@
+import { makeStyles } from "@material-ui/core";
 import { FC, useEffect, useState } from "react";
+import { TeamModel } from "../../api/team/model/TeamModel";
+import { TeamApi } from "../../api/team/TeamApi";
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { EmployeeModel } from "../../api/employee/model/EmployeeModel";
-import { TeamApi } from "../../api/team/TeamApi";
-import { makeStyles } from "@material-ui/styles";
 
-type SelectEmployeeProps = {
+type SelectTeamProps = {
     onChange: (event: React.ChangeEvent<any>) => void;
     value: any;
     class: string;
-    teamId: number;
     formName: string;
 }
 
 const useStyles = makeStyles({
     text: {
-        width: '200px',
+        width: '120px',
         lineHeight: '30px',
         height: '30px',
         alignSelf: 'center',
@@ -28,38 +27,38 @@ const useStyles = makeStyles({
     }
 });
 
-const SelectEmployee: FC<SelectEmployeeProps> = (props) => {
+const SelectTeam: FC<SelectTeamProps> = (props) => {
     const classes = useStyles();
-    const [employees, setEmployees] = useState<EmployeeModel[]>([]);
 
-    const fetchEmployees = (): void => {
-        TeamApi.getEmployees(props.teamId).then(employeesResponse => {
-            setEmployees(employeesResponse);
-        })
-    };
+    const [teams, setTeams] = useState<TeamModel[]>([]);
 
     useEffect(() => {
-        fetchEmployees()
+        fetchTeams()
     }, []);
+
+    const fetchTeams = (): void => {
+        TeamApi.list()
+            .then(teamsResponse => setTeams((teamsResponse)))
+            .catch((err: Error) => console.log(err))
+    }
 
     return (
         <div className={classes.container}>
-            <div className={classes.text}>Select employee: </div>
-            
+            <div className={classes.text}>Select team: </div>
             <Select
-                id="select-assignee"
+                id="select-team"
                 onChange={props.onChange}
                 value={props.value}
                 name={props.formName}
                 className={props.class}
             >
                 <MenuItem value={undefined}>
-                            <em>None</em>
+                    <em>None</em>
                 </MenuItem>
                 {
-                    employees.map(e => (
-                        <MenuItem value={e.id}>
-                            {e.name} {e.surname}
+                    teams.map(team => (
+                        <MenuItem value={team.id}>
+                            {team.name}
                         </MenuItem>
                     ))
                 }
@@ -68,4 +67,4 @@ const SelectEmployee: FC<SelectEmployeeProps> = (props) => {
     )
 }
 
-export default SelectEmployee;
+export default SelectTeam;

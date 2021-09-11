@@ -10,10 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { CreateProject } from "../../api/project/model/CreateProject";
 import { ProjectApi } from "../../api/project/ProjectApi";
 
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { TeamModel } from "../../api/team/model/TeamModel";
-import { TeamApi } from "../../api/team/TeamApi";
+import SelectTeam from "../team/SelectTeam";
 
 type AddProjectProps = {
     success: () => void;
@@ -61,17 +58,17 @@ const useStyles = makeStyles({
         marginLeft: '15px',
         marginRight: '15px',
         marginBottom: '15px'
+    },
+    selectTeam: {
+        width: '100%'
     }
 });
 
 const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
     const classes = useStyles();
     const [addingProject, setAddingProject] = useState<boolean>(false);
-    const [teams, setTeams] = useState<TeamModel[]>([]);
     
-    useEffect(() => {
-        fetchTeams()
-    }, []);
+   
 
     const initialState = {
         name: "",
@@ -92,12 +89,6 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
                 setFormValues(initialState);
                 props.success();
             });
-    }
-
-    const fetchTeams = (): void => {
-        TeamApi.list()
-            .then(teamsResponse => setTeams((teamsResponse)))
-            .catch((err: Error) => console.log(err))
     }
 
     return (
@@ -128,22 +119,9 @@ const AddProject: FC<AddProjectProps> = (props: AddProjectProps) => {
                                 onChange={onChange}
                                 name="description"
                             />
-
-                            <Select
-                                id="select-team"
-                                onChange={onChange}
-                                value={formValues.teamId}
-                                name="teamId"
-                                className={classes.formElement}
-                            >
-                                {
-                                    teams.map(team => (
-                                        <MenuItem value={team.id}>
-                                            {team.name}
-                                        </MenuItem>
-                                    ))
-                                }
-                            </Select>
+                            <div className={classes.formElement}>
+                                <SelectTeam onChange={onChange} value={formValues.teamId} class={classes.selectTeam} formName="teamId"></SelectTeam>
+                            </div>
 
                             <div className={classes.buttons}>
                                 <Button variant="contained" color="secondary" className={classes.button}

@@ -48,6 +48,11 @@ const useStyles = makeStyles({
         justifySelf: 'flex-end',
         height: '40px',
         width: '75px'
+    },
+    teamDetails: {
+        marginLeft: '15px',
+        marginRight: '15px',
+        marginBottom: '15px',
     }
 });
 
@@ -173,7 +178,7 @@ const Project: FC<ProjectProps> = (props) => {
                                 }}></Backlog>
                             </ProjectTab>
                             <ProjectTab value={tabIdx} index={2}>
-                                <TeamDetails teamId={project.teamId} allowAdding={false}></TeamDetails>
+                                <TeamDetails className={classes.teamDetails} teamId={project.teamId} allowAdding={false}></TeamDetails>
                             </ProjectTab>
                         </Paper>
                     </div>
