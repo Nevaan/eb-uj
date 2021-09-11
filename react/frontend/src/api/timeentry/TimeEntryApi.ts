@@ -1,6 +1,6 @@
 import { apiConfig } from '../ApiConfig';
 import { CreateTimeEntry } from './model/CreateTimeEntry';
-import { TimeEntryModel } from './model/TimeEntryModel';
+import { GetTimeEntry } from './model/GetTimeEntry';
 
 const timeEntryApiUrl = `${ apiConfig.baseUrl }timeentry`;
 
@@ -17,7 +17,7 @@ export const TimeEntryApi = {
         }).then(res => res.json())
     },
 
-    listForSubtask: (id: number): Promise<TimeEntryModel[]> => {
+    listForSubtask: (id: number): Promise<GetTimeEntry[]> => {
         return fetch(`${timeEntryApiUrl}/subtask/${id}`, {
             method: 'GET',
             headers: { 

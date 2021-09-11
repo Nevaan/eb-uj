@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { TimeEntryModel } from "../../api/timeentry/model/TimeEntryModel";
+import { GetTimeEntry } from "../../api/timeentry/model/GetTimeEntry";
 import { TimeEntryApi } from "../../api/timeentry/TimeEntryApi";
 import AddTimeEntry from "./AddTimeEntry";
 import AppTableWrapper from "../table/AppTableWrapper";
@@ -12,8 +12,8 @@ type TimeEntryListProps = {
     teamId: number;
 }
 
-const columns: Column<'assigneeId' | 'manHours'>[] = [
-    { id: 'assigneeId', label: 'assigneeId', minWidth: 170 },
+const columns: Column<'employee' | 'manHours'>[] = [
+    { id: 'employee', label: 'employee', minWidth: 170 },
     {
         id: 'manHours',
         label: 'manHours',
@@ -24,7 +24,7 @@ const columns: Column<'assigneeId' | 'manHours'>[] = [
 
 const TimeEntryList: FC<TimeEntryListProps> = (props) => {
 
-    const [timeEntries, setTimeEntries] = useState<TimeEntryModel[]>([]);
+    const [timeEntries, setTimeEntries] = useState<GetTimeEntry[]>([]);
 
     useEffect(() => {
         fetchTimeEntries();

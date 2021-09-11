@@ -11,7 +11,7 @@ type CommentListProps = {
     taskId: number
 }
 
-const columns: Column<'id' | 'content' | 'authorId'>[] = [
+const columns: Column<'id' | 'content' | 'author'>[] = [
     {id: 'id', label: 'Id', minWidth: 170},
     {
         id: 'content',
@@ -20,8 +20,8 @@ const columns: Column<'id' | 'content' | 'authorId'>[] = [
         align: 'left',
     },
     {
-        id: 'authorId',
-        label: 'authorId',
+        id: 'author',
+        label: 'author',
         minWidth: 170,
         align: 'left',
     }

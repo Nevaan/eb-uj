@@ -7,17 +7,24 @@ import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";
 import AddTask from "./AddTask";
 import { TaskApi } from "../../api/task/TaskApi";
+import { GetTaskList } from "../../api/task/model/GetTaskList";
 
 type TaskListProps = {
     storyId: number;
     teamId: number;
 }
 
-const columns: Column<'id' | 'description'>[] = [
+const columns: Column<'id' | 'description' | 'assignee'>[] = [
     {id: 'id', label: 'Id', minWidth: 170},
     {
         id: 'description',
         label: 'description',
+        minWidth: 170,
+        align: 'left',
+    },
+    {
+        id: 'assignee',
+        label: 'assignee',
         minWidth: 170,
         align: 'left',
     }
@@ -27,7 +34,7 @@ const TaskList: FC<TaskListProps> = (props) => {
 
     const history = useHistory();
 
-    const [tasks, setTasks] = useState<TaskModel[]>([]);
+    const [tasks, setTasks] = useState<GetTaskList[]>([]);
 
     useEffect(() => {
         fetchTasks();

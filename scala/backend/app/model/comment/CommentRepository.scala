@@ -1,5 +1,7 @@
 package model.comment
 
+import model.dto.GetComment
+import model.user.repo.UserRepositoryImpl
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
@@ -7,7 +9,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CommentRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class CommentRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRepository: UserRepositoryImpl)(implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -30,8 +32,21 @@ class CommentRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(imp
       ) += (content, authorId)
   }
 
-  def getByIdList(ids: Seq[Long]): Future[Seq[Comment]] = db.run {
-    comment.filter(_.id inSet ids).result
+  def getByIdList(ids: Seq[Long]): Future[Seq[GetComment]] = db.run {
+    comment.filter(_.id inSet ids)
+      .join(userRepository.user)
+      .on(_.authorId === _.id)
+      .result
+      .map(commentList => {
+        commentList.map(commentListElement => {
+          val (comment, user) = commentListElement
+          user.fullName match {
+            case Some(fullName) => GetComment(comment.id, comment.content, fullName)
+            case None => GetComment(comment.id, comment.content, "unknown")
+          }
+
+        })
+      })
   }
 
 }

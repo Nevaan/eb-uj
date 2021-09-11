@@ -10,12 +10,12 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserRepositoryImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) extends UserRepository {
 
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
+  val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
 
-  private class UserTable(tag: Tag) extends Table[User](tag, "User") {
+  class UserTable(tag: Tag) extends Table[User](tag, "User") {
     def id = column[String]("id", O.PrimaryKey)
     def firstName = column[Option[String]]("first_name")
     def lastName = column[Option[String]]("last_name")
@@ -27,7 +27,7 @@ class UserRepositoryImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
     def * = (id, firstName, lastName, fullName, email, avatarUrl) <> (User.tupled, User.unapply)
   }
 
-  private val user = TableQuery[UserTable]
+  val user = TableQuery[UserTable]
 
   def list(): Future[Seq[User]] = db.run {
     user.result

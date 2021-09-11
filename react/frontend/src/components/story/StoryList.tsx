@@ -4,18 +4,30 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";
 import { useHistory } from "react-router-dom";
-import { StoryModel } from "../../api/story/model/StoryModel";
 import { makeStyles } from "@material-ui/core";
+import { GetStoryList } from "../../api/story/model/GetStoryList";
 
 type StoryListProps = {
-    stories: StoryModel[]
+    stories: GetStoryList[]
 }
 
-const columns: Column<'id' | 'description'>[] = [
+const columns: Column<'id' | 'name' | 'description' | 'assignee'>[] = [
     { id: 'id', label: 'Id', minWidth: 170 },
+    {
+        id: 'name',
+        label: 'name',
+        minWidth: 170,
+        align: 'left',
+    },
     {
         id: 'description',
         label: 'description',
+        minWidth: 170,
+        align: 'left',
+    },
+    {
+        id: 'assignee',
+        label: 'assignee',
         minWidth: 170,
         align: 'left',
     }

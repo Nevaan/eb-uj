@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import { StoryModel } from "../../api/story/model/StoryModel";
 import { StoryApi } from "../../api/story/StoryApi";
 import StoryList from "../story/StoryList";
 import { Button, makeStyles } from "@material-ui/core";
 import { SprintApi } from "../../api/sprint/SprintApi";
 import UpdateProjectStage from "../stage/UpdateProjectStage";
 import { ProjectStage } from "../../api/stage/model/ProjectStage";
+import { GetStoryList } from "../../api/story/model/GetStoryList";
 
 type SprintProps = {
     id: number | undefined;
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 const Sprint: FC<SprintProps> = (props) => {
     const classes = useStyles();
-    const [sprint, setSprint] = useState<StoryModel[]>([]);
+    const [sprint, setSprint] = useState<GetStoryList[]>([]);
     const [stage, setStage] = useState<ProjectStage>();
 
     useEffect(() => {

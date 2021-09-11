@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";
 import { SubtaskApi } from "../../api/subtask/SubtaskApi";
 import AddSubtask from './AddSubtask';
+import { GetSubtaskList } from "../../api/subtask/model/GetSubtaskList";
 
 type SubtaskListProps = {
     taskId: number;
@@ -14,11 +15,17 @@ type SubtaskListProps = {
     teamId: number;
 }
 
-const columns: Column<'id' | 'description'>[] = [
+const columns: Column<'id' | 'description' | 'assignee'>[] = [
     {id: 'id', label: 'Id', minWidth: 170},
     {
         id: 'description',
         label: 'description',
+        minWidth: 170,
+        align: 'left',
+    },
+    {
+        id: 'assignee',
+        label: 'assignee',
         minWidth: 170,
         align: 'left',
     }
@@ -28,7 +35,7 @@ const SubtaskList: FC<SubtaskListProps> = (props) => {
 
     const history = useHistory();
 
-    const [subtasks, setSubtasks] = useState<SubtaskModel[]>([]);
+    const [subtasks, setSubtasks] = useState<GetSubtaskList[]>([]);
 
     useEffect(() => {
         fetchSubtasks();

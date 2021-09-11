@@ -1,4 +1,5 @@
 import { apiConfig } from '../ApiConfig';
+import { GetSubtaskList } from './model/GetSubtaskList';
 import { GetSubtaskModel } from './model/GetSubtaskModel';
 import { SubtaskModel } from './model/SubtaskModel';
 
@@ -28,7 +29,7 @@ export const SubtaskApi = {
         .then(res => res.json())
     },
 
-    getList: (taskId: number): Promise<SubtaskModel[]> => {
+    getList: (taskId: number): Promise<GetSubtaskList[]> => {
         return fetch(`${subtaskApiUrl}/all/${taskId}`, { 
             method: 'GET', 
             headers: { 

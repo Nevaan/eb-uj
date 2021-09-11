@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { StoryModel } from "../../api/story/model/StoryModel";
 import { StoryApi } from "../../api/story/StoryApi";
 import AddStory from "../story/AddStory";
 import StoryList from "../story/StoryList";
@@ -8,6 +7,7 @@ import { SprintApi } from "../../api/sprint/SprintApi";
 import UpdateProjectStage from "../stage/UpdateProjectStage";
 import { ProjectStage } from "../../api/stage/model/ProjectStage";
 import { BacklogApi } from "../../api/backlog/BacklogApi";
+import { GetStoryList } from "../../api/story/model/GetStoryList";
 
 type BacklogProps = {
     id: number | undefined;
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const Backlog: FC<BacklogProps> = (props) => {
     const classes = useStyles();
-    const [backlog, setBacklog] = useState<StoryModel[]>([]);
+    const [backlog, setBacklog] = useState<GetStoryList[]>([]);
     const [stage, setStage] = useState<ProjectStage>();
 
     useEffect(() => {

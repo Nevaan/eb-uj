@@ -1,4 +1,5 @@
 import { apiConfig } from '../ApiConfig';
+import { GetTaskList } from './model/GetTaskList';
 import { GetTaskModel } from './model/GetTaskModel';
 import { TaskModel } from './model/TaskModel';
 
@@ -28,7 +29,7 @@ export const TaskApi = {
         .then(res => res.json())
     },
 
-    getListForStory: (storyId: number): Promise<TaskModel[]> => {
+    getListForStory: (storyId: number): Promise<GetTaskList[]> => {
         return fetch(`${taskApiUrl}/all/${storyId}`, { 
             method: 'GET', 
             headers: { 

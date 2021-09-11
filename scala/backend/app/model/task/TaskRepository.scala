@@ -1,5 +1,7 @@
 package model.task
 
+import model.dto.GetTaskList
+import model.employee.EmployeeRepository
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
@@ -7,7 +9,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class TaskRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class TaskRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, employeeRepository: EmployeeRepository)(implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -32,12 +34,36 @@ class TaskRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
       ) += (description, storyId, parentId, assigneeId)
   }
 
-  def getTasksForStory(storyId: Long): Future[Seq[Task]] = db.run {
-    task.filter(_.storyId === storyId).filter(_.parentId.isEmpty).result
+  def getTasksForStory(storyId: Long): Future[Seq[GetTaskList]] = db.run {
+    task.filter(_.storyId === storyId).filter(_.parentId.isEmpty)
+      .joinLeft(employeeRepository.employee)
+      .on(_.assigneeId === _.id)
+      .result
+      .map( list => {
+        list.map(singleTask => {
+          val (task, maybeEmployee) = singleTask
+          maybeEmployee match {
+            case Some(employee) => GetTaskList(task.id, task.description, Some(s"${employee.name} ${employee.surname}"))
+            case None => GetTaskList(task.id, task.description, None)
+          }
+        })
+      })
   }
 
-  def getSubtasks(taskId: Long): Future[Seq[Task]] = db.run {
-    task.filter(_.parentId === taskId).result
+  def getSubtasks(taskId: Long): Future[Seq[GetTaskList]] = db.run {
+    task.filter(_.parentId === taskId)
+      .joinLeft(employeeRepository.employee)
+      .on(_.assigneeId === _.id)
+      .result
+      .map( list => {
+        list.map(singleTask => {
+          val (task, maybeEmployee) = singleTask
+          maybeEmployee match {
+            case Some(employee) => GetTaskList(task.id, task.description, Some(s"${employee.name} ${employee.surname}"))
+            case None => GetTaskList(task.id, task.description, None)
+          }
+        })
+      })
   }
 
   def getSubtasksForTaskIdList(taskIds: Seq[Long]): Future[Seq[Task]] = db.run {
