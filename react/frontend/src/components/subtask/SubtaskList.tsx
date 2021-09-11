@@ -1,7 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {Column} from "../table/column";
 import {useHistory} from "react-router-dom";
-import {SubtaskModel} from "../../api/subtask/model/SubtaskModel";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import AppTableWrapper from "../table/AppTableWrapper";

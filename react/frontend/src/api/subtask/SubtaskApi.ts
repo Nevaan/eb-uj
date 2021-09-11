@@ -1,7 +1,6 @@
 import { apiConfig } from '../ApiConfig';
 import { GetSubtaskList } from './model/GetSubtaskList';
 import { GetSubtaskModel } from './model/GetSubtaskModel';
-import { SubtaskModel } from './model/SubtaskModel';
 
 const subtaskApiUrl = `${ apiConfig.baseUrl }subtask`;
 

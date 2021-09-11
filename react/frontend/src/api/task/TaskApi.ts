@@ -1,7 +1,6 @@
 import { apiConfig } from '../ApiConfig';
 import { GetTaskList } from './model/GetTaskList';
 import { GetTaskModel } from './model/GetTaskModel';
-import { TaskModel } from './model/TaskModel';
 
 const taskApiUrl = `${ apiConfig.baseUrl }task`;
 

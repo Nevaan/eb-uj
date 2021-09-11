@@ -1,6 +1,5 @@
 import {FC, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
-import {TaskModel} from "../../api/task/model/TaskModel";
 import {Column} from "../table/column";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
